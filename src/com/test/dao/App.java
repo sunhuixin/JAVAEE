@@ -22,4 +22,10 @@ public class App {
 		User user = userDao.queryUserByName("aaa");
 		System.out.println(user);
 	}
+	
+	@Test
+	public void test1() {
+		User user = userDao.queryUserByName("aaa");
+		System.out.println(user);
+	}
 }
