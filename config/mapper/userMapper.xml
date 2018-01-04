@@ -11,7 +11,7 @@
 		WHERE 
 				user_name=#{userName}
 	</select>
-	<select id="queryUserByNameAndPassword">
+	<select id="queryUserByNameAndPassword" resultType="User" parameterType="String">
 		SELECT 
 				*
 		FROM

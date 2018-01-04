@@ -35,6 +35,9 @@ public class User{
 		this.password = password;
 		this.type = type;
 	}
+	public User() {
+		super();
+	}
 	public int getUserId() {
 		return userId;
 	}
@@ -79,7 +82,9 @@ public class User{
 	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", type=" + type
+				+ ", depart=" + depart + ", position=" + position + ", entryTime=" + entryTime + "]";
 	}
+	
 	
 }

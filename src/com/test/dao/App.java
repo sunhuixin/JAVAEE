@@ -1,6 +1,5 @@
 package com.test.dao;
 
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +24,7 @@ public class App {
 	
 	@Test
 	public void test1() {
-		User user = userDao.queryUserByName("aaa");
+		User user = userDao.queryUserByNameAndPassword("aaa","123aaa");
 		System.out.println(user);
 	}
 }

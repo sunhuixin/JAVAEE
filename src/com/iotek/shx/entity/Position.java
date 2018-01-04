@@ -3,10 +3,12 @@ package com.iotek.shx.entity;
 public class Position {
 	private int id;
 	private String name;
-	public Position(int id, String name) {
+	private Department depart;
+	public Position(int id, String name,Department depart) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.depart=depart;
 	}
 	public Position() {
 		super();
@@ -22,6 +24,12 @@ public class Position {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Department getDepart() {
+		return depart;
+	}
+	public void setDepart(Department depart) {
+		this.depart = depart;
 	}
 	
 }

@@ -12,7 +12,13 @@
 					url:"${pageContext.request.contextPath}/findUserByName",
 					type:"post",
 					dataType:"text",
-					
+					data:{name:name},
+					success:function(data){
+						alert(data);
+						if(data!=0){
+							$("span").text("该用名不存在！");
+						}
+					}
 				})
 			})
 		})
@@ -24,7 +30,7 @@
 	<form action="findUserByNameAndPassword" method="post">
 		<table>
 			<tr>
-				<td><input type="text" name="userName" size="30"value="用户名"></td>
+				<td><input type="text" name="userName" size="30"value="用户名"><span></span></td>
 				<td><input type="text" name="password" size="30" value="密码"></td>
 			</tr>
 			<tr></tr>
