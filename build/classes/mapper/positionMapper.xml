@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iotek.shx.dao.PositionDao">
+	<insert id="savePosition" parameterType="Position">
+		INSERT INTO POSITIONS(
+			p_name,
+			create_time,
+			depart_id
+		)VALUES(
+			#{pName},
+			#{createTime},
+			#{depart.dId}
+		)
+	</insert>
+	<delete id="deletePosition" parameterType="int">
+		DELETE FROM POSITIONS
+		WHERE p_id=#{pId}
+	</delete>
+	<update id="updatePosition" parameterType="Position">
+		UPDATE POSITIONS SET
+			p_name=#{pName},
+			create_time={createTime}
+		WHERE 
+			depart_id=#{depart.dId}
+		AND
+			p_id=#{pId}
+	</update>
+	
+</mapper>

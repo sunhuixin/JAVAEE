@@ -1,29 +1,39 @@
 package com.iotek.shx.entity;
 
+import java.util.Date;
+
 public class Position {
-	private int id;
-	private String name;
+	private int pId;
+	private String pName;
+	private Date createTime;
 	private Department depart;
-	public Position(int id, String name,Department depart) {
+	public Position(int pId, String pName,Date createTime, Department depart) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.depart=depart;
+		this.pId = pId;
+		this.pName = pName;
+		this.createTime=createTime;
+		this.depart = depart;
 	}
 	public Position() {
 		super();
 	}
-	public int getId() {
-		return id;
+	public int getpId() {
+		return pId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setpId(int pId) {
+		this.pId = pId;
 	}
-	public String getName() {
-		return name;
+	public String getpName() {
+		return pName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	public Department getDepart() {
 		return depart;
@@ -31,5 +41,11 @@ public class Position {
 	public void setDepart(Department depart) {
 		this.depart = depart;
 	}
+	@Override
+	public String toString() {
+		return "Position [pId=" + pId + ", pName=" + pName + ", createTime=" + createTime + ", depart=" + depart + "]";
+	}
+	
+	
 	
 }
