@@ -9,12 +9,13 @@ public class User{
 	private String realName;//真是姓名
 	private int age;//年龄
 	private int type;//0代表游客1代表员工2代表管理员
+	private int status;
 	private Department depart;//部门
 	private Position position;//职位
 	private Date entryTime;//入职时间
 	private double baseSalary;//基本薪资
 	
-	public User(int userId, String userName, String password, String realName, int age, int type, Department depart,
+	public User(int userId, String userName, String password, String realName, int age, int type,int status, Department depart,
 			Position position, Date entryTime, double baseSalary) {
 		super();
 		this.userId = userId;
@@ -23,10 +24,12 @@ public class User{
 		this.realName = realName;
 		this.age = age;
 		this.type = type;
+		this.status=status;
 		this.depart = depart;
 		this.position = position;
 		this.entryTime = entryTime;
 		this.baseSalary = baseSalary;
+		
 	}
 	public User(int userId, String userName, String password,int type) {
 		super();
@@ -68,6 +71,13 @@ public class User{
 	public void setType(int type) {
 		this.type = type;
 	}
+	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public Department getDepart() {
 		return depart;
 	}
@@ -107,8 +117,8 @@ public class User{
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", realName=" + realName
-				+ ", age=" + age + ", type=" + type + ", depart=" + depart + ", position=" + position + ", entryTime="
-				+ entryTime + ", baseSalary=" + baseSalary + "]";
+				+ ", age=" + age + ", type=" + type + ", status=" + status + ", depart=" + depart + ", position="
+				+ position + ", entryTime=" + entryTime + ", baseSalary=" + baseSalary + "]";
 	}
 	
 	

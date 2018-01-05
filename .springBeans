@@ -10,6 +10,7 @@
 		<config>config/mapper/userMapper.xml</config>
 		<config>config/mapper/positionMapper.xml</config>
 		<config>config/mapper/departMapper.xml</config>
+		<config>config/mapper/resumeMapper.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
