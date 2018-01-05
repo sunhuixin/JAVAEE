@@ -5,13 +5,13 @@ import java.util.Date;
 public class Position {
 	private int pId;
 	private String pName;
-	private Date createTime;
+	private Date generateTime;
 	private Department depart;
-	public Position(int pId, String pName,Date createTime, Department depart) {
+	public Position(int pId, String pName,Date generateTime, Department depart) {
 		super();
 		this.pId = pId;
 		this.pName = pName;
-		this.createTime=createTime;
+		this.generateTime=generateTime;
 		this.depart = depart;
 	}
 	public Position() {
@@ -29,11 +29,11 @@ public class Position {
 	public void setpName(String pName) {
 		this.pName = pName;
 	}
-	public Date getCreateTime() {
-		return createTime;
+	public Date getGenerateTime() {
+		return generateTime;
 	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setGenerateTime(Date generateTime) {
+		this.generateTime = generateTime;
 	}
 	public Department getDepart() {
 		return depart;
@@ -43,7 +43,8 @@ public class Position {
 	}
 	@Override
 	public String toString() {
-		return "Position [pId=" + pId + ", pName=" + pName + ", createTime=" + createTime + ", depart=" + depart + "]";
+		return "Position [pId=" + pId + ", pName=" + pName + ", generateTime=" + generateTime 
+				+ "]";
 	}
 	
 	

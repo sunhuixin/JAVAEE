@@ -43,8 +43,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "addUser")
-	public String addUser(String userName, String password) {
-		userService.addUser(userName, password);
+	public String addUser(User user) {
+		userService.addUser(user);
 		return "index.jsp";
 	}
 

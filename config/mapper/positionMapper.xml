@@ -6,11 +6,11 @@
 	<insert id="savePosition" parameterType="Position">
 		INSERT INTO POSITIONS(
 			p_name,
-			create_time,
+			generate_time,
 			depart_id
 		)VALUES(
 			#{pName},
-			#{createTime},
+			#{generateTime},
 			#{depart.dId}
 		)
 	</insert>

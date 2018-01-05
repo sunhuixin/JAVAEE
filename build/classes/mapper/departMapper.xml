@@ -3,18 +3,20 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.iotek.shx.dao.DepartmentDao">
-	<select id="queryAllDepart" resultMap="PositionResult">
+	<select id="queryAllDepart" resultMap="DepartResult">
 		SELECT * FROM
-			DEPARTS 
+			DEPARTS d ,POSITIONS p
+		WHERE 
+			d.d_id=	p.depart_id
 	</select>
-	<resultMap type="Position" id="PositionResult">
+	<resultMap type="Department" id="DepartResult">
 		<id property="dId" column="d_id"/>
 		<result property="dName" column="d_name"/>
 		<result property="createTime" column="create_time"/>
 		<collection property="position" ofType="Position">
 			<id property="pId" column="p_id"/>
 			<result property="pName" column="p_name"/>
-			<result property="createTime" column="create_time"/>
+			<result property="generateTime" column="generate_time"/>
 		</collection>
 	</resultMap>
 	<insert id="saveDepart" parameterType="Department">

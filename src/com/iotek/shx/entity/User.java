@@ -6,21 +6,27 @@ public class User{
 	private int userId;//用户id
 	private String userName;//用户名
 	private String password;//用户密码
+	private String realName;//真是姓名
+	private int age;//年龄
 	private int type;//0代表游客1代表员工2代表管理员
-	private Department depart;
-	private Position position;
-	private Date entryTime;
+	private Department depart;//部门
+	private Position position;//职位
+	private Date entryTime;//入职时间
+	private double baseSalary;//基本薪资
 	
-	public User(int userId, String userName, String password, int type, Department depart, Position position,
-			Date entryTime) {
+	public User(int userId, String userName, String password, String realName, int age, int type, Department depart,
+			Position position, Date entryTime, double baseSalary) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.password = password;
+		this.realName = realName;
+		this.age = age;
 		this.type = type;
 		this.depart = depart;
 		this.position = position;
 		this.entryTime = entryTime;
+		this.baseSalary = baseSalary;
 	}
 	public User(int userId, String userName, String password,int type) {
 		super();
@@ -80,10 +86,29 @@ public class User{
 	public void setEntryTime(Date entryTime) {
 		this.entryTime = entryTime;
 	}
+	public String getRealName() {
+		return realName;
+	}
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public double getBaseSalary() {
+		return baseSalary;
+	}
+	public void setBaseSalary(double baseSalary) {
+		this.baseSalary = baseSalary;
+	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", type=" + type
-				+ ", depart=" + depart + ", position=" + position + ", entryTime=" + entryTime + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", realName=" + realName
+				+ ", age=" + age + ", type=" + type + ", depart=" + depart + ", position=" + position + ", entryTime="
+				+ entryTime + ", baseSalary=" + baseSalary + "]";
 	}
 	
 	

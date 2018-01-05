@@ -21,7 +21,7 @@
 		AND
 				password=#{password}
 	</select>
-	<insert id="saveUser" parameterType="String">
+	<insert id="saveUser" parameterType="User">
 		INSERT INTO
 				users(
 					user_name,

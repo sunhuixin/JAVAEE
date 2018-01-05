@@ -9,12 +9,11 @@ public class Department {
 	private String dName;
 	private Date createTime;
 	private Set<Position> position=new HashSet<Position>();
-	public Department(int dId, String dName, Date createTime,Set<Position> position) {
+	public Department(int dId, String dName, Date createTime) {
 		super();
 		this.dId = dId;
 		this.dName = dName;
 		this.createTime=createTime;
-		this.position = position;
 	}
 	public Department() {
 		super();

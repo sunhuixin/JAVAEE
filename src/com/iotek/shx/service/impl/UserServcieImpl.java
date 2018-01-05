@@ -23,8 +23,8 @@ public class UserServcieImpl implements UserService{
 	}
 
 	@Override
-	public int addUser(String userName, String password) {
-		return userDao.saveUser(userName, password);
+	public int addUser(User user) {
+		return userDao.saveUser(user);
 	}
 	
 }
