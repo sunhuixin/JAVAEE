@@ -29,7 +29,7 @@
 <title>登录页面</title>
 	<style>
 		body{
-			background-image: url(../image/01.jpg);
+			background-image: url(${pageContext.request.contextPath}/image/01.jpg);
 			background-repeat:no-repeat;
 			background-position: center;
 			background-attachment:fixed;
@@ -38,8 +38,9 @@
 	</style>
 </head>
 <body >
+	<div align="center" style=" margin-top: 100px">
 	<form action="${pageContext.request.contextPath}/user/findUserByNameAndPassword" method="post">
-		<table >
+		<table>
 			<tr><td style="font-size:30px;color:red;text-align: center;">欢迎使用人力资源管理系统！</td></tr>
 			<tr>
 				<td><input type="text" name="userName" size="30"><span style="color:red"></span></td>
@@ -48,18 +49,19 @@
 				<td><input type="password" name="password" size="30" ></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="登录" size="20px"></td>
+				<td><input type="submit" value="登录" size="20px" style=" text-align: center;"></td>
 				
 			</tr>
 			<tr>
-				<td><input type="reset" value="取消" size="20px"></td>
+				<td><input type="reset" value="取消" size="20px" style=" text-align: center;"></td>
 			</tr>
 			<tr>
 				<td style="color: red">快来加入我们吧！<a
-					href="${pageContext.request.contextPath }/toRegister"
-					style="color: yellow; font-size: 20px;  ">注册</a></td>
+					href="${pageContext.request.contextPath }/user/toRegister"
+					style="color: yellow; font-size: 25px ; font-style: italic;">注册</a></td>
 			</tr>
 		</table>
 	</form>
+	</div>
 </body>
 </html>

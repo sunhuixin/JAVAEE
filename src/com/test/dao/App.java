@@ -3,6 +3,7 @@ package com.test.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ import com.iotek.shx.entity.Position;
 import com.iotek.shx.entity.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration({"/spring.xml","/spring-mvc.xml","/spring-mybatis.xml"})
 public class App {
 	@Autowired
 	private UserDao userDao;
@@ -59,6 +60,14 @@ public class App {
 	public void test5() {
 		int res = departDao.deleteDepart(1);
 		System.out.println(res);
+	}
+	
+	@Test
+	public void test8() {
+		Department depart = departDao.queryDepart(3);
+		Set<Position> set = depart.getPosition();
+			System.out.println(set);
+		
 	}
 	
 	@Test

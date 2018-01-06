@@ -9,5 +9,5 @@ public interface DepartmentDao {
 	public int deleteDepart(int id);
 	public int updateDepart(Department depart);
 	public List<Department> queryAllDepart();
-
+	public  Department queryDepart(int id);
 }
