@@ -104,7 +104,7 @@ body {
 			<li id="li1"><a href="#">反馈</a></li>
 			<li id="li2"><a href="${pageContext.request.contextPath}/resume/findResume?userId=${sessionScope.user.userId}">查看简历</a></li>
 			<li id="li3"><a href="${pageContext.request.contextPath}/user/updatePassword?password=${sessionScope.user.password}&userId=${sessionScope.user.userId}">修改密码</a></li>
-			<li id="li4"><a href="${pageContext.request.contextPath}/recruit/findRecruit">查看招聘信息</a></li>
+			<li id="li4"><a href="${pageContext.request.contextPath}/recruit/findAll">查看招聘信息</a></li>
 			<li id="li5"><a href="#">退出</a></li>
 		</ul>
 	</div>

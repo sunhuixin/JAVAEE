@@ -12,7 +12,7 @@ public class Recruit {
 //	招聘人数：3人 
 //	职位类别：软件工程师
 	private int rid;
-	private String workPalce;
+	private String workPlace;
 	private Date releaseTime;
 	private String jobType;
 	private String workExperience;
@@ -21,11 +21,11 @@ public class Recruit {
 	private String positionCategory;
 	private String positionDecription;
 	private String companyProfile;
-	public Recruit(int rid, String workPalce, Date releaseTime, String jobType, String workExperience, String minDegree,
+	public Recruit(int rid, String workPlace, Date releaseTime, String jobType, String workExperience, String minDegree,
 			int needNumber, String positionCategory, String positionDecription, String companyProfile) {
 		super();
 		this.rid = rid;
-		this.workPalce = workPalce;
+		this.workPlace = workPlace;
 		this.releaseTime = releaseTime;
 		this.jobType = jobType;
 		this.workExperience = workExperience;
@@ -44,11 +44,11 @@ public class Recruit {
 	public void setRid(int rid) {
 		this.rid = rid;
 	}
-	public String getWorkPalce() {
-		return workPalce;
+	public String getWorkPlace() {
+		return workPlace;
 	}
-	public void setWorkPalce(String workPalce) {
-		this.workPalce = workPalce;
+	public void setWorkPlace(String workPlace) {
+		this.workPlace = workPlace;
 	}
 	public Date getReleaseTime() {
 		return releaseTime;
@@ -100,7 +100,7 @@ public class Recruit {
 	}
 	@Override
 	public String toString() {
-		return "Recruit [rid=" + rid + ", workPalce=" + workPalce + ", releaseTime=" + releaseTime + ", jobType="
+		return "Recruit [rid=" + rid + ", workPalce=" + workPlace + ", releaseTime=" + releaseTime + ", jobType="
 				+ jobType + ", workExperience=" + workExperience + ", minDegree=" + minDegree + ", needNumber="
 				+ needNumber + ", positionCategory=" + positionCategory + ", positionDecription=" + positionDecription
 				+ ", companyProfile=" + companyProfile + "]";
