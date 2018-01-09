@@ -26,5 +26,10 @@ public class UserServcieImpl implements UserService{
 	public int addUser(User user) {
 		return userDao.saveUser(user);
 	}
+
+	@Override
+	public int updatePassword(String password,int userId) {
+		return userDao.updatePassword(password,userId);
+	}
 	
 }

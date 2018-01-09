@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.RecruitDao">
+	<select id="queryAll">
+		SELECT * FROM RECRUITS
+	</select>
+	<delete id="deleteRecruit" parameterType="int">
+		DELETE FROM RECRUITS
+		WHERE r_id=#{rid}
+	</delete>
+	<insert id="saveRecruit" parameterType="Recruit">
+		INSERT INTO RECRUITS (
+			work_place,
+			release_time,
+			job_type,
+			work_experience,
+			min_degree,
+			need_number,
+			position_category,
+			position_decription,
+			company_profile
+		)values(
+			#{workPlace},
+			#{releaseTime},
+			#{jobType},
+			#{workExperience},
+			#{minDegree},
+			#{needNumber},
+			#{positionCategroy},
+			#{positionDecription},
+			#{companyProfile}
+		)
+	</insert>
+	<update id="updateRecruit" parameterType="Recruit">
+		UPDATE RECRUITS SET
+			work_place=#{workPlace},
+			release_time=#{releaseTime},
+			job_type=#{jobType},
+			work_experience=#{workExperience},
+			min_degree=#{minDegree},
+			need_number=#{needNumber},
+			position_category=#{positionCategroy},
+			position_decription=#{positionDecription},
+			company_profile=#{companyProfile}
+		WHERE 
+			r_id=#{rid}
+	</update>
+	
+</mapper>

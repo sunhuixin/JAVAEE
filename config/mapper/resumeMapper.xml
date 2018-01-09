@@ -3,7 +3,94 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.iotek.shx.dao.ResumeDao">
-	<select id="saveResume" parameterType="Resume">
-		
+	<select id="saveResume" parameterType="Resume" resultType="int">
+		INSERT INTO RESUMES(
+			user_id,
+			real_name,
+			gender,
+			age,
+			degree,
+			phone_number,
+			email,
+			depart_id,
+			position_id,
+			political_status,
+			last_job,
+			work_expirence,
+			expected_salary,
+			hobby
+		)values(
+			#{userId},
+			#{realName},
+			#{gender},
+			#{age},
+			#{degree},
+			#{phoneNumber},
+			#{email},
+			#{depart.dId},
+			#{position.pid},
+			#{politicalStatus},
+			#{lastJob},
+			#{workExpirence},
+			#{expectedSalary},
+			#{hobby}
+		)
 	</select>
+		<select id="queryResume" resultMap="ResultResume" parameterType="int">
+			SELECT * FROM RESUMES r,DEPARTS d,POSITIONS p
+			WHERE 
+				r.depart_id=d.d_id 
+			AND
+				r.position_id=p.p_id
+			AND
+			user_id=#{userId}
+		</select>
+		<!-- 你说代表什么？？ -->
+		<resultMap type="Resume" id="ResultResume">
+			<id column="id" property="id"/>
+			<result column="user_id" property="userId"/>
+			<result column="real_name" property="realName"/>
+			<result column="gender" property="gender"/>
+			<result column="age" property="age"/>
+			<result column="degree" property="degree"/>
+			<result column="phone_number" property="phoneNumber"/>
+			<result column="email" property="email"/>
+			<result column="political_status" property="politicalStatus"/>
+			<result column="last_job" property="lastJob"/>
+			<result column="work_expirence" property="workExpirence"/>
+			<result column="expected_salary" property="expectedSalary"/>
+			<result column="hobby" property="hobby"/>
+			<!-- 很明显这里下面错了 -->
+			<association property="depart" column="depart_id" javaType="Department">
+				<id column="d_id" property="dId"/>
+				<result column="d_name" property="dName"/>
+				<result column="create_time" property="createTime"/>
+			</association>
+			<!--  -->
+			<association property="position" column="position_id" javaType="Position">
+				<id column="p_id" property="pid"/>
+				<result column="p_name" property="pname"/>
+				<result column="generate_time" property="generateTime"/>
+			</association>
+		    <!-- 就这里被 -->
+		 
+		</resultMap>
+		<update id="updateResume" parameterType="Resume">
+			UPDATE RESUMES SET
+				real_name=#{realName},
+				gender=#{gender},
+				age=#{age},
+				degree=#{degree},
+				phone_number=#{phoneNumber},
+				email=#{email},
+				depart_id=#{depart.dId},
+				position_id=#{position.pid},
+				political_status=#{politicalStatus},
+				last_job=#{lastJob},
+				work_expirence=#{workExpirence},
+				expected_salary=#{expectedSalary},
+				hobby=#{hobby}
+			WHERE 
+				ID=#{id}
+		</update>
 </mapper>

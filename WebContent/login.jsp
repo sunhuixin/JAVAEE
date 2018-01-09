@@ -8,7 +8,6 @@
 		$(function(){
 			$("input[name='userName']").blur(function(){
 				var name=$(this).val();
-				alert(name);
 				$.ajax({
 					url:"${pageContext.request.contextPath}/user/findUserByName",
 					type:"post",

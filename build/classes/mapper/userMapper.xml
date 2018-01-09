@@ -33,4 +33,10 @@
 					#{type}
 				)
 	</insert>
+	<update id="updatePassword" parameterType="String" >
+		UPDATE USERS
+			SET PASSWORD=#{password}
+		WHERE 
+			user_id=#{userId}
+	</update>
 </mapper>

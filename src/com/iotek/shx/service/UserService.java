@@ -7,4 +7,5 @@ public interface UserService{
 	public User findUserByName(String name);
 	public User findUserByNameAndPassword(String name,String password);
 	public int addUser(User user);
+	public int  updatePassword(String password, int userId);
 }

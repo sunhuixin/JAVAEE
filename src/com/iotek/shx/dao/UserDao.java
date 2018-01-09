@@ -7,4 +7,5 @@ public interface UserDao{
 	public User queryUserByName(String name);
 	public User queryUserByNameAndPassword(@Param(value="userName")String userName,@Param(value="password")String password);
 	public int saveUser(User user);
+	public int updatePassword(@Param(value="password")String password, @Param(value="userId")int userId);
 }

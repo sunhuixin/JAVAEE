@@ -3,31 +3,38 @@ package com.iotek.shx.entity;
 import java.util.Date;
 
 public class Position {
-	private int pId;
-	private String pName;
+	private int pid;
+	private String pname;
 	private Date generateTime;
 	private Department depart;
-	public Position(int pId, String pName,Date generateTime, Department depart) {
+	public Position(int pid, String pname,Date generateTime, Department depart) {
 		super();
-		this.pId = pId;
-		this.pName = pName;
+		this.pid = pid;
+		this.pname = pname;
 		this.generateTime=generateTime;
 		this.depart = depart;
 	}
+	public Position(int pid, String pname, Date generateTime) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.generateTime = generateTime;
+	}
+
 	public Position() {
 		super();
 	}
-	public int getpId() {
-		return pId;
+	public int getPid() {
+		return pid;
 	}
-	public void setpId(int pId) {
-		this.pId = pId;
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
-	public String getpName() {
-		return pName;
+	public String getPname() {
+		return pname;
 	}
-	public void setpName(String pName) {
-		this.pName = pName;
+	public void setPname(String pname) {
+		this.pname = pname;
 	}
 	public Date getGenerateTime() {
 		return generateTime;
@@ -43,7 +50,7 @@ public class Position {
 	}
 	@Override
 	public String toString() {
-		return "Position [pId=" + pId + ", pName=" + pName + ", generateTime=" + generateTime 
+		return "Position [pId=" + pid + ", pName=" + pname + ", generateTime=" + generateTime 
 				+ "]";
 	}
 	

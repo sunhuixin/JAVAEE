@@ -10,15 +10,16 @@ public class Resume {
 	private String phoneNumber;
 	private String email;
 	private Department depart;
+	private Position position;
 	private String politicalStatus;
 	private String lastJob;
 	private String workExpirence;
 	private String expectedSalary;
 	private String hobby;
-	private String sign;
+	
 	public Resume(int id, int userId, String realName, String gender, int age, String degree, String phoneNumber,
-			String email, Department depart, String politicalStatus, String lastJob, String workExpirence,
-			String expectedSalary, String hobby,String sign) {
+			String email, Department depart, Position position, String politicalStatus, String lastJob,
+			String workExpirence, String expectedSalary, String hobby) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -29,12 +30,12 @@ public class Resume {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.depart = depart;
+		this.position = position;
 		this.politicalStatus = politicalStatus;
 		this.lastJob = lastJob;
 		this.workExpirence = workExpirence;
 		this.expectedSalary = expectedSalary;
 		this.hobby = hobby;
-		this.sign=sign;
 	}
 	public Resume(int userId, String realName, String gender, int age, String degree, String phoneNumber, String email,
 			Department depart, String politicalStatus, String lastJob, String workExpirence, String expectedSalary,
@@ -53,7 +54,6 @@ public class Resume {
 		this.workExpirence = workExpirence;
 		this.expectedSalary = expectedSalary;
 		this.hobby = hobby;
-		this.sign=sign;
 	}
 	public Resume() {
 		super();
@@ -112,6 +112,12 @@ public class Resume {
 	public void setDepart(Department depart) {
 		this.depart = depart;
 	}
+	public Position getPosition() {
+		return position;
+	}
+	public void setPosition(Position position) {
+		this.position = position;
+	}
 	public String getPoliticalStatus() {
 		return politicalStatus;
 	}
@@ -143,18 +149,13 @@ public class Resume {
 		this.hobby = hobby;
 	}
 	
-	public String getSign() {
-		return sign;
-	}
-	public void setSign(String sign) {
-		this.sign = sign;
-	}
 	@Override
 	public String toString() {
 		return "Resume [id=" + id + ", userId=" + userId + ", realName=" + realName + ", gender=" + gender + ", age="
 				+ age + ", degree=" + degree + ", phoneNumber=" + phoneNumber + ", email=" + email + ", depart="
-				+ depart + ", politicalStatus=" + politicalStatus + ", lastJob=" + lastJob + ", workExpirence="
-				+ workExpirence + ", expectedSalary=" + expectedSalary + ", hobby=" + hobby + "]";
+				+ depart + ", position=" + position + ", politicalStatus=" + politicalStatus + ", lastJob=" + lastJob
+				+ ", workExpirence=" + workExpirence + ", expectedSalary=" + expectedSalary + ", hobby=" + hobby
+				+  "]";
 	}
 	
 

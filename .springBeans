@@ -11,6 +11,7 @@
 		<config>config/mapper/positionMapper.xml</config>
 		<config>config/mapper/departMapper.xml</config>
 		<config>config/mapper/resumeMapper.xml</config>
+		<config>config/mapper/recruitMapper.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

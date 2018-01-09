@@ -13,9 +13,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.iotek.shx.dao.DepartmentDao;
 import com.iotek.shx.dao.PositionDao;
+import com.iotek.shx.dao.ResumeDao;
 import com.iotek.shx.dao.UserDao;
 import com.iotek.shx.entity.Department;
 import com.iotek.shx.entity.Position;
+import com.iotek.shx.entity.Resume;
 import com.iotek.shx.entity.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,6 +29,8 @@ public class App {
 	private DepartmentDao departDao;
 	@Autowired
 	private PositionDao positionDao;
+	@Autowired
+	private ResumeDao resumeDao;
 
 	@Test
 	public void test() {
@@ -80,6 +84,17 @@ public class App {
 	public void test7() {
 		int res = positionDao.savePosition(new Position(-1,"技术员",new Date(),new Department(5,"技术部",new Date())));
 	
+		System.out.println(res);
+	}
+	
+	@Test
+	public void test9() {
+		Resume resume = resumeDao.queryResume(1);
+		System.out.println(resume);
+	}
+	@Test
+	public void test10() {
+		int res = resumeDao.saveResume(new Resume(-1,1,"iotek","男",20,"硕士","13122223333","1312222@163.com",new Department(5,"技术部",new Date()),new Position(12,"技术总监",new Date(),new Department(5,"技术部",new Date())),"党员","java工程师","5年开发经验","5000-6000","打篮球"));
 		System.out.println(res);
 	}
 }

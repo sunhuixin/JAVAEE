@@ -9,24 +9,34 @@
 			generate_time,
 			depart_id
 		)VALUES(
-			#{pName},
+			#{pname},
 			#{generateTime},
 			#{depart.dId}
 		)
 	</insert>
 	<delete id="deletePosition" parameterType="int">
 		DELETE FROM POSITIONS
-		WHERE p_id=#{pId}
+		WHERE p_id=#{pid}
 	</delete>
 	<update id="updatePosition" parameterType="Position">
 		UPDATE POSITIONS SET
-			p_name=#{pName},
+			p_name=#{pname},
 			create_time={createTime}
 		WHERE 
 			depart_id=#{depart.dId}
 		AND
-			p_id=#{pId}
+			p_id=#{pid}
 	</update>
+	<select id="queryPosition" resultType="Position">
+		SELECT 
+				P_ID,
+				P_NAME,
+				GENERATE_TIME 
+		FROM 
+				POSITIONS
+		WHERE 
+				p_id=#{pid}
+	</select>
 	
 	
 </mapper>
