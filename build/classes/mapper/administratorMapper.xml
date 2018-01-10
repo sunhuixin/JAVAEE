@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.AdministratorDao">
+	<select id="queryByNameAndPassword" resultType="Administrator">
+		SELECT 
+			admin_id,
+			admin_name,
+			admin_password,
+			admin_level,
+			d_id "depart.dId",
+			d_name "depart.dName"
+		FROM 
+			ADMINS a,DEPARTS d
+		WHERE 
+			admin_name=#{adminName} 
+		AND 
+			admin_password=#{adminPassword}
+		AND
+			a.depart_id=d.d_id
+	</select>
+	<select id="queryByDepartId" resultType="Administrator">
+			SELECT 
+			admin_id,
+			admin_name,
+			admin_password,
+			admin_level,
+			d_id "depart.dId",
+			d_name "depart.dName"
+		FROM 
+			ADMINS a,DEPARTS d
+		WHERE
+			a.depart_id=d.d_id	
+		AND
+			d.d_id=#{dId}
+	</select>
+	<select id="queryId" resultType="Administrator">
+		SELECT 
+			admin_id,
+			admin_name,
+			admin_password,
+			admin_level,
+			d_id "departt.dId",
+			d_name "depart.dName"
+		FROM 
+			ADMINS a,DEPARTS d
+		WHERE 
+			admin_id=#{adminId}
+		AND
+			a.depart_id=d.d_id
+	</select>
+</mapper>

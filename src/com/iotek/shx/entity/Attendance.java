@@ -4,27 +4,19 @@ import java.util.Date;
 //考勤
 public class Attendance {
 	private int attendId;
-	private User user;
-	private Date inClock;//上班时间
-	private Date outClock;//下班时间
-	private boolean isLater;//是否迟到
-	private boolean earlyLeave;//是否早退
-	public Attendance(int attendId, User user, Date inClock, Date outClock, boolean isLater, boolean earlyLeave) {
+	private Employee emp;
+	private String inClock;//上班时间
+	private String outClock;//下班时间
+	private Date date;
+	private int late;
+	public Attendance(int attendId, Employee emp, String inClock, String outClock, Date date, int late) {
 		super();
 		this.attendId = attendId;
-		this.user = user;
+		this.emp = emp;
 		this.inClock = inClock;
 		this.outClock = outClock;
-		this.isLater = isLater;
-		this.earlyLeave = earlyLeave;
-	}
-	public Attendance(User user, Date inClock, Date outClock, boolean isLater, boolean earlyLeave) {
-		super();
-		this.user = user;
-		this.inClock = inClock;
-		this.outClock = outClock;
-		this.isLater = isLater;
-		this.earlyLeave = earlyLeave;
+		this.date = date;
+		this.late = late;
 	}
 	public Attendance() {
 		super();
@@ -35,41 +27,42 @@ public class Attendance {
 	public void setAttendId(int attendId) {
 		this.attendId = attendId;
 	}
-	public User getUser() {
-		return user;
+	public Employee getEmp() {
+		return emp;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setEmp(Employee emp) {
+		this.emp = emp;
 	}
-	public Date getInClock() {
+	public String getInClock() {
 		return inClock;
 	}
-	public void setInClock(Date inClock) {
+	public void setInClock(String inClock) {
 		this.inClock = inClock;
 	}
-	public Date getOutClock() {
+	public String getOutClock() {
 		return outClock;
 	}
-	public void setOutClock(Date outClock) {
+	public void setOutClock(String outClock) {
 		this.outClock = outClock;
 	}
-	public boolean isLater() {
-		return isLater;
+	public Date getDate() {
+		return date;
 	}
-	public void setLater(boolean isLater) {
-		this.isLater = isLater;
+	public void setDate(Date date) {
+		this.date = date;
 	}
-	public boolean isEarlyLeave() {
-		return earlyLeave;
+	public int getLate() {
+		return late;
 	}
-	public void setEarlyLeave(boolean earlyLeave) {
-		this.earlyLeave = earlyLeave;
+	public void setLate(int late) {
+		this.late = late;
 	}
 	@Override
 	public String toString() {
-		return "Attendance [attendId=" + attendId + ", user=" + user + ", inClock=" + inClock + ", outClock=" + outClock
-				+ ", isLater=" + isLater + ", earlyLeave=" + earlyLeave + "]";
+		return "Attendance [attendId=" + attendId + ", emp=" + emp + ", inClock=" + inClock + ", outClock=" + outClock
+				+ ", date=" + date + ", late=" + late + "]";
 	}
+	
 	
 
 }

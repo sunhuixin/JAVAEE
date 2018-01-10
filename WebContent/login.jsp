@@ -42,7 +42,7 @@
 		<table>
 			<tr><td style="font-size:30px;color:red;text-align: center;">欢迎使用人力资源管理系统！</td></tr>
 			<tr>
-				<td><input type="text" name="userName" size="30"><span style="color:red"></span></td>
+				<td><input type="text" name="userName" size="30"><span style="color:red"></span></td>tr
 			</tr>
 			<tr>
 				<td><input type="password" name="password" size="30" ></td>

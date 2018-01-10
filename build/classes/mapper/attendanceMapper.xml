@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.AttendanceDao">
+		<insert id="insertOnTimeByEmpId">
+		INSERT INTO ATTENDANCES(
+			emp_id,
+			date,
+			in_clock
+		)VALUES(
+			#{empId},
+			#{date},
+			#{inClock}
+		)
+	</insert>
+	<update id="updateOffTimeByEmpId">
+		UPDATE ATTENDANCES
+		SET
+			out_clock=#{outClock}
+		WHERE
+			empId=#{empId}
+		AND
+			date=#{date}
+	</update>
+	<select id="queryByEmpId" resultType="Attendance">
+		SELECT
+			attend_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			date,
+			in_clock,
+			out_clock,
+			late
+		FROM
+			ATTENDANCES a,
+			EMPLOYEES e
+		WHERE
+			e.emp_id=a.emp_id
+		AND
+			a.emp_id=#{empId}
+	</select>
+	<select id="queryByEmpIdAndDate" resultType="Attendance">
+		SELECT
+			attend_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			date,
+			in_clock,
+			out_clock,
+			late
+		FROM
+			ATTENDANCES a,
+			EMPLOYEES e
+		WHERE
+			e.emp_id=a.emp_id
+		AND
+			a.emp_id=#{empId}
+		AND
+			a.date=#{date}
+	</select>
+	<update id="updateLate0">
+		UPDATE
+			ATTENDANCES
+		SET
+			late=0
+		WHERE
+			emp_id = #{empId}
+		AND
+			date = #{date}
+		AND
+			late =null
+	</update>
+	<update id="updateLate2">
+		UPDATE 
+			ATTENDANCES
+		SET 
+			late=2
+		WHERE 
+			emp_id = #{empId} 
+		AND
+			date = #{date} 
+	</update>
+	<update id="updateLate1">
+		UPDATE
+			ATTENDANCES
+		SET
+			late=1
+		WHERE
+			emp_id = #{empId}
+		AND
+			date = #{date}
+		AND
+			late = null
+	</update>
+</mapper>

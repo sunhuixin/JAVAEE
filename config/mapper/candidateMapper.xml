@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.CandidateDao">
+	<select id="queryAll" resultType="Candidate">
+		SELECT * FROM CANDIDATES
+	</select>
+	<delete id="deleteCandidate" parameterType="int">
+		DELETE FROM CANDIDATES 
+		WHERE 
+			c_id=#{cid}
+	</delete>
+	<insert id="saveCandidate" parameterType="Candidate">
+		INSERT INTO CANDIDATES(
+			user_id,
+			recruit_id,
+			candidate_time,
+			candidate_status
+		)values(
+			#{user.userId},
+			#{recruit.rid},
+			#{candidateTime},
+			#{candidateStatus}
+		)
+		
+	</insert>
+</mapper>

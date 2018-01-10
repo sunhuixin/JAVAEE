@@ -12,6 +12,14 @@
 		<config>config/mapper/departMapper.xml</config>
 		<config>config/mapper/resumeMapper.xml</config>
 		<config>config/mapper/recruitMapper.xml</config>
+		<config>config/mapper/candidateMapper.xml</config>
+		<config>config/mapper/salaryMapper.xml</config>
+		<config>config/mapper/rewardMapper.xml</config>
+		<config>config/mapper/punishmentMapper.xml</config>
+		<config>config/mapper/rewardAndPunishmentMapper.xml</config>
+		<config>config/mapper/trainingMapper.xml</config>
+		<config>config/mapper/attendanceMapper.xml</config>
+		<config>config/mapper/administratorMapper.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
