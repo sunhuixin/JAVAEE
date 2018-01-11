@@ -6,20 +6,18 @@ public class Employee {
 	private int empId;
 	private User user;
 	private String empName;
-	private Date empAge;
 	private Department depart;
 	private Position position;
 	private double baseSalary;
 	private Date empDate;
 	private String empEmail;
-	private Integer empPoliticalStatus;
-	public Employee(int empId, User user, String empName, Date empAge, Department depart, Position position,
-			double baseSalary, Date empDate, String empEmail, Integer empPoliticalStatus) {
+	private String empPoliticalStatus;
+	public Employee(int empId, User user, String empName, Department depart, Position position,
+			double baseSalary, Date empDate, String empEmail, String empPoliticalStatus) {
 		super();
 		this.empId = empId;
 		this.user = user;
 		this.empName = empName;
-		this.empAge = empAge;
 		this.depart = depart;
 		this.position = position;
 		this.baseSalary = baseSalary;
@@ -47,12 +45,6 @@ public class Employee {
 	}
 	public void setEmpName(String empName) {
 		this.empName = empName;
-	}
-	public Date getEmpAge() {
-		return empAge;
-	}
-	public void setEmpAge(Date empAge) {
-		this.empAge = empAge;
 	}
 	public Department getDepart() {
 		return depart;
@@ -84,15 +76,15 @@ public class Employee {
 	public void setEmpEmail(String empEmail) {
 		this.empEmail = empEmail;
 	}
-	public Integer getEmpPoliticalStatus() {
+	public String getEmpPoliticalStatus() {
 		return empPoliticalStatus;
 	}
-	public void setEmpPoliticalStatus(Integer empPoliticalStatus) {
+	public void setEmpPoliticalStatus(String empPoliticalStatus) {
 		this.empPoliticalStatus = empPoliticalStatus;
 	}
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", user=" + user + ", empName=" + empName + ", empAge=" + empAge
+		return "Employee [empId=" + empId + ", user=" + user + ", empName=" + empName 
 				+ ", depart=" + depart + ", position=" + position + ", baseSalary=" + baseSalary + ", empDate="
 				+ empDate + ", empEmail=" + empEmail + ", empPoliticalStatus=" + empPoliticalStatus + "]";
 	}

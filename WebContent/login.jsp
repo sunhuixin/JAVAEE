@@ -8,6 +8,9 @@
 		$(function(){
 			$("input[name='userName']").blur(function(){
 				var name=$(this).val();
+				if(name==""){
+					$("#user").text("用户名不能为空！")
+				}
 				$.ajax({
 					url:"${pageContext.request.contextPath}/user/findUserByName",
 					type:"post",
@@ -15,12 +18,18 @@
 					data:{name:name},
 					success:function(data){
 						if(data==0){
-							$("span").text("该用户不存在！");
+							$("#user").text("用户名不正确！");
 						}else{
-							$("span").text("");
+							$("#user").text("");
 						}
 					}
 				})
+			})
+			$("input[name='password']").blur(function(){
+				var passsword = $(this).val();
+				if(password==""){
+					$("#pw").text("密码不能为空");
+				}
 			})
 		})
 	</script>
@@ -39,20 +48,24 @@
 <body >
 	<div align="center" style=" margin-top: 100px">
 	<form action="${pageContext.request.contextPath}/user/findUserByNameAndPassword" method="post">
-		<table>
-			<tr><td style="font-size:30px;color:red;text-align: center;">欢迎使用人力资源管理系统！</td></tr>
+		<table >
+			<tr><td style="font-size:30px;color:red;text-align: center;"colspan="3">欢迎使用人力资源管理系统！</td></tr>
 			<tr>
-				<td><input type="text" name="userName" size="30"><span style="color:red"></span></td>tr
+				<td>用户名</td>
+				<td><input type="text" name="userName" size="30" style="border-radius: 10px"></td>
+				<td><span style="color:red;"id="user"></span></td>
 			</tr>
 			<tr>
-				<td><input type="password" name="password" size="30" ></td>
+				<td>密码</td>
+				<td><input type="password" name="password" size="30" style="border-radius: 10px"></td>
+				<td><span style="color:red"id="pw"></span></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="登录" size="20px" style=" text-align: center;"></td>
+				<td style="text-align: center;"><input type="submit" value="登录" size="20px" style=" text-align: center;border-radius: 10px;"></td>
 				
 			</tr>
 			<tr>
-				<td><input type="reset" value="取消" size="20px" style=" text-align: center;"></td>
+				<td style="text-align: center;"><input type="reset" value="取消" size="20px" style=" text-align: center;border-radius: 10px;"></td>
 			</tr>
 			<tr>
 				<td style="color: red">快来加入我们吧！<a

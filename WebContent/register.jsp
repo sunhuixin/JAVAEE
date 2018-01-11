@@ -30,14 +30,17 @@
 				</tr>
 				<tr></tr>
 				<tr>
+					<td>请输入用户名</td>
 					<td><input type="text" value="请输入用户名" name="userName" size="30px"/></td>
 				</tr>
 				<tr></tr>
 				<tr>
+					<td>请输入密码</td>
 					<td><input type="password" value="请输入密码" name="password1" size="30px"/></td>
 				</tr>
 				<tr></tr>
 				<tr>
+					<td>请输入密码</td>
 					<td><input type="password" value="请确认密码" name="password2" size="30px"/></td>
 				</tr>
 				<tr></tr>

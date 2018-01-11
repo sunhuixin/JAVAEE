@@ -10,6 +10,6 @@ public interface InterviewDao {
 	public Interview queryByUerId(int userId);
 	public int updateChecked(int interviewId);
 	public int updateReplyed(int interviewId);
-	public List<Interview> queryByAidAndReply(int adminId);
+	public List<Interview> queryByAdminIdAndReply(int adminId);
 	public int deleteByResumeId(int resumeId);
 }

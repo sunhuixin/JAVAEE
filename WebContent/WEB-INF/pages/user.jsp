@@ -86,9 +86,7 @@ body {
 #div1{
 	background-color: #cc6666;
 	
-	height:100%;
-	
-	
+	height:100%;	
 }
 
 #div2{

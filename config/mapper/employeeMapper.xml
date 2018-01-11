@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+	<insert id="insert" parameterType="Resume">
+		INSERT INTO 
+		EMPLOYEES 
+		(
+			user_Id,
+			emp_name,
+			depart_id,
+			position_id,
+			emp_email,
+			emp_political_status,
+			base_salary,
+			emp_date
+		)VALUES(
+			#{userId},
+			#{realName},
+			#{depart.dId},
+			#{position.pid},
+			#{email},
+			#{politicalStatus},
+			#{expectedSalary},
+			now()
+		)
+	</insert>
+	<select id="queryByUserId" resultType="Employee">
+		SELECT 
+			emp_id,
+			u.user_id "user.userId",
+			u.user_name "user.userName",
+			u.password "user.password",
+			emp_name,
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			p.p_id "position.pid",
+			p.p_name "position.pname",
+			emp_email,
+			emp_political_status,
+			emp_date 
+		FROM 
+			EMPLOYEES e,DEPARTS d,POSITIONS p ,USERS u  
+		WHERE
+			e.user_id=u.user_id 
+		AND
+			e.departt_id=d.d_id 
+		AND
+			e.position_id=p.p_id
+		AND 
+			u.user_id =#{userId}
+	</select>
+	
+	<select id="queryByDepartId" resultType="Employee">
+		SELECT 
+			emp_id,
+			u.user_id "user.userId",
+			u.user_name "user.userName",
+			u.password "user.password",
+			emp_name,
+			base_salary,
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			p.p_id "position.pid",
+			p.p_name "position.pname",
+			emp_email,
+			emp_political_status,
+			emp_date 
+		FROM 
+			EMPLOYEES e,DEPARTS d,POSITIONS p ,USERS u  
+		WHERE
+			e.user_id=u.user_id 
+		AND
+			e.depart_id=d.d_id 
+		AND
+			e.position_id=p.p_id
+		AND 
+			e.depart_id=#{dId}
+	</select>
+	<select id="queryByEmpId" resultType="Employee">
+	SELECT 
+			emp_id,
+			u.user_id "user.userId",
+			u.user_name "user.userName",
+			u.password "user.password",
+			emp_name,
+			base_salary,
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			p.p_id "position.pid",
+			p.p_name "position.pname",
+			emp_email,
+			emp_political_status,
+			emp_date 
+		FROM 
+			EMPLOYEES e,DEPARTS d,POSITIONS p ,USERS u  
+		WHERE
+			e.user_id=u.user_id 
+		AND
+			e.depart_id=d.d_id 
+		AND
+			e.position_id=p.p_id
+		AND 
+			e.emp_id=#{empId}
+	</select>
+	<update id="updateByEmpId">
+	UPDATE 
+		EMPLOYEES 
+	SET 
+		depart_id=#{dId},
+		position_id=#{pid} 
+	WHERE 
+		emp_id=#{empId}
+	</update>
+	<update id="updateSalaryByEmpId">
+	UPDATE 
+		EMPLOYEES 
+	SET 
+		base_Salary=base_Salary+#{addSalary} 
+	WHERE 
+		emp_id=#{empId}
+	</update>
+	<select id="queryAll" resultType="Employee">
+	SELECT 
+			emp_id,
+			u.user_id "user.userId",
+			u.user_name "user.userName",
+			u.password "user.password",
+			emp_name,
+			base_salary,
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			p.p_id "position.pid",
+			p.p_name "position.pname",
+			emp_email,
+			emp_political_status,
+			emp_date 
+		FROM 
+			EMPLOYEES e,DEPARTS d,POSITIONS p ,USERS u  
+		WHERE
+			e.user_id=u.user_id 
+		AND
+			e.depart_id=d.d_id 
+		AND
+			e.position_id=p.p_id
+	</select>
+	<select id="queryByPositionId" resultType="Employee">
+		SELECT 
+			emp_id,
+			u.user_id "user.userId",
+			u.user_name "user.userName",
+			u.password "user.password",
+			emp_name,
+			base_salary,
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			p.p_id "position.pid",
+			p.p_name "position.pname",
+			emp_email,
+			emp_political_status,
+			emp_date
+		FROM 
+			EMPLOYEES e,DEPARTS d,POSITIONS p ,USERS u   
+		WHERE
+			e.user_id=u.user_id 
+		AND
+			e.depart_id=d.d_id 
+		AND
+			e.position_id=p.p_id
+		AND 
+			p.p_id=#{pid}
+	</select>
+	<delete id="deleteByEmpId">
+		DELETE FROM 
+			EMPLOYEES
+		WHERE 
+			emp_id=#{empId};
+	</delete>
+</mapper>

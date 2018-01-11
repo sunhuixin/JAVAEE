@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.InterviewDao">
+	<insert id="insert">
+		INSERT INTO 
+			INTERVIEWS 
+			(
+			interview_place,
+			interview_time,
+			resume_id,
+			admin_id,
+			checked,
+			replyed,
+			interviewer) 
+		VALUES 
+			(
+			#{interviewPlace},
+			#{interviewTime},
+			#{resume.id},
+			#{admin.admin_id},
+			1,
+			1,
+			#{interviewer}
+			)
+	</insert>
+	<select id="queryByUserId" resultType="Interview">
+		SELECT 
+			interview_id,
+			interview_place,
+			interview_time,
+			r.id "resume.resume_id",
+			r.user_id "resume.userId",
+			r.real_name "resume.realName",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			checked,
+			replyed,
+			interviewer 
+		FROM
+			RESUMES r,INTERVIEWS i,ADMINS a
+		WHERE 
+			a.admin_id = i.admin_id
+		AND 
+			r.id =i.resume_id
+		AND 
+			r.user_id =#{userId}
+	</select>
+	<update id="updateChecked">
+		UPDATE 
+			INTERVIEWS 
+		SET 
+			checked=0 
+		WHERE 
+			interview_id=#{interviewId}
+	</update>
+	<update id="updateReplyed">
+		UPDATE 
+			INTERVIEWS 
+		SET 
+			replyed=0,
+			replyed_time=now()  
+		WHERE 
+			interview_id=#{interviewId}
+		AND 
+			replyed=1
+	</update>
+	<select id="queryByAdminIdAndReply" resultType="Interview">
+		SELECT 
+			interview_id,
+			interview_place,
+			interview_time,
+			r.id "resume.resume_id",
+			r.user_id "resume.userId",
+			r.real_name "resume.realName",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			checked,
+			replyed,
+		FROM
+			RESUMES r,INTERVIEWS i,ADMINS a
+		WHERE 
+			a.admin_id = i.admin_id
+		AND 
+			r.id =i.resume_id
+		AND 
+			a.admin_id =#{adminId}
+		AND
+			replyed=0
+	</select>
+	<delete id="deleteByResumeId">
+		DELETE 
+			FROM 
+		INTERVIEWS 
+			WHERE 
+		resume_id=#{id};
+	</delete>
+</mapper>

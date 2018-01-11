@@ -7,21 +7,21 @@ public class Punishment {
 	private String punishReason;
 	private double punishMoney;
 	private Date punishTime;
-	private User user;
-	public Punishment(int punishId, String punishReason, double punishMoney, Date punishTime, User user) {
+	private Employee emp;
+	public Punishment(int punishId, String punishReason, double punishMoney, Date punishTime, Employee emp) {
 		super();
 		this.punishId = punishId;
 		this.punishReason = punishReason;
 		this.punishMoney = punishMoney;
 		this.punishTime = punishTime;
-		this.user = user;
+		this.emp = emp;
 	}
-	public Punishment(String punishReason, double punishMoney, Date punishTime, User user) {
+	public Punishment(String punishReason, double punishMoney, Date punishTime, Employee emp) {
 		super();
 		this.punishReason = punishReason;
 		this.punishMoney = punishMoney;
 		this.punishTime = punishTime;
-		this.user = user;
+		this.emp = emp;
 	}
 	public Punishment() {
 		super();
@@ -50,16 +50,16 @@ public class Punishment {
 	public void setPunishTime(Date punishTime) {
 		this.punishTime = punishTime;
 	}
-	public User getUser() {
-		return user;
+	public Employee getEmp() {
+		return emp;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setEmp(Employee emp) {
+		this.emp = emp;
 	}
 	@Override
 	public String toString() {
 		return "Punishment [punishId=" + punishId + ", punishReason=" + punishReason + ", punishMoney=" + punishMoney
-				+ ", punishTime=" + punishTime + ", user=" + user + "]";
+				+ ", punishTime=" + punishTime + ", emp=" + emp + "]";
 	}
 	
 	

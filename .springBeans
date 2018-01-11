@@ -20,6 +20,8 @@
 		<config>config/mapper/trainingMapper.xml</config>
 		<config>config/mapper/attendanceMapper.xml</config>
 		<config>config/mapper/administratorMapper.xml</config>
+		<config>config/mapper/employeeMapper.xml</config>
+		<config>config/mapper/interviewMapper.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

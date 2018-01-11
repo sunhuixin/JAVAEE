@@ -7,9 +7,9 @@ import com.iotek.shx.entity.Training;
 public interface TrainingDao {
 	public int insertByEmp(Training train);
 
-	public Training queryByEmpId(int eid);
+	public Training queryByEmpId(int empId);
 
-	public int updateByEid(Integer eid);
+	public int updateByEmpId(int empId);
 
 	public List<Training> queryAll();
 

@@ -45,7 +45,6 @@
 			AND
 			user_id=#{userId}
 		</select>
-		<!-- 你说代表什么？？ -->
 		<resultMap type="Resume" id="ResultResume">
 			<id column="id" property="id"/>
 			<result column="user_id" property="userId"/>
