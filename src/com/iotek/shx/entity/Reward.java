@@ -7,21 +7,17 @@ public class Reward {
 	private String rewardReason;
 	private double rewardMoney;
 	private Date rewardTime;
-	private User user;
-	public Reward(int rewardId, String rewardReason, double rewardMoney, Date rewardTime, User user) {
+	private Employee emp;
+	private Administrator admin;
+	public Reward(int rewardId, String rewardReason, double rewardMoney, Date rewardTime, Employee emp,
+			Administrator admin) {
 		super();
 		this.rewardId = rewardId;
 		this.rewardReason = rewardReason;
 		this.rewardMoney = rewardMoney;
 		this.rewardTime = rewardTime;
-		this.user = user;
-	}
-	public Reward(String rewardReason, double rewardMoney, Date rewardTime, User user) {
-		super();
-		this.rewardReason = rewardReason;
-		this.rewardMoney = rewardMoney;
-		this.rewardTime = rewardTime;
-		this.user = user;
+		this.emp = emp;
+		this.admin = admin;
 	}
 	public Reward() {
 		super();
@@ -50,16 +46,23 @@ public class Reward {
 	public void setRewardTime(Date rewardTime) {
 		this.rewardTime = rewardTime;
 	}
-	public User getUser() {
-		return user;
+	public Employee getEmp() {
+		return emp;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setEmp(Employee emp) {
+		this.emp = emp;
+	}
+	public Administrator getAdmin() {
+		return admin;
+	}
+	public void setAdmin(Administrator admin) {
+		this.admin = admin;
 	}
 	@Override
 	public String toString() {
 		return "Reward [rewardId=" + rewardId + ", rewardReason=" + rewardReason + ", rewardMoney=" + rewardMoney
-				+ ", rewardTime=" + rewardTime + ", user=" + user + "]";
+				+ ", rewardTime=" + rewardTime + ", emp=" + emp + ", admin=" + admin + "]";
 	}
+	
 	
 }

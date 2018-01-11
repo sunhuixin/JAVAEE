@@ -8,20 +8,23 @@ public class Training {
 	private String trainingContent;
 	private Date beginTime;
 	private Date endTime;
+	private Administrator admin;
 	private Department depart;
-	private User user;
+	private Employee emp;
+	private int attended;
 	public Training(int trainingId, String trainingTitle, String trainingContent, Date beginTime, Date endTime,
-			Department depart, User user) {
+			Administrator admin, Department depart, Employee emp,int attended) {
 		super();
 		this.trainingId = trainingId;
 		this.trainingTitle = trainingTitle;
 		this.trainingContent = trainingContent;
 		this.beginTime = beginTime;
 		this.endTime = endTime;
+		this.admin = admin;
 		this.depart = depart;
-		this.user = user;
+		this.emp = emp;
+		this.attended=attended;
 	}
-	
 	public Training() {
 		super();
 	}
@@ -61,17 +64,32 @@ public class Training {
 	public void setDepart(Department depart) {
 		this.depart = depart;
 	}
-	public User getUser() {
-		return user;
+	
+	public Administrator getAdmin() {
+		return admin;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setAdmin(Administrator admin) {
+		this.admin = admin;
+	}
+	public Employee getEmp() {
+		return emp;
+	}
+	public void setEmp(Employee emp) {
+		this.emp = emp;
+	}
+	public int getAttended() {
+		return attended;
+	}
+	public void setAttended(int attended) {
+		this.attended = attended;
 	}
 	@Override
 	public String toString() {
 		return "Training [trainingId=" + trainingId + ", trainingTitle=" + trainingTitle + ", trainingContent="
-				+ trainingContent + ", beginTime=" + beginTime + ", endTime=" + endTime + ", depart=" + depart
-				+ ", user=" + user + "]";
+				+ trainingContent + ", beginTime=" + beginTime + ", endTime=" + endTime + ", admin=" + admin
+				+ ", depart=" + depart + ", emp=" + emp + ", attended=" + attended + "]";
 	}
+	
+	
 	
 }

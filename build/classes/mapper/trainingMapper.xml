@@ -2,10 +2,90 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper>
-	<select id="">
-	
+	<select id="queryByEmpId" resultType="Training">
+		SELECT 
+			training_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			training_title,
+			training_content,
+			begin_time,
+			end_time,
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			attended 
+		FROM 
+			TRAININGS t,EMPLOYEES e,ADMINS a,DEPARTS d 
+		WHERE 
+			t.emp_id=#{empId}
+		AND
+			e.emp_id = t.emp_id 
+		AND
+			d.d_id = t.depart_id 
+		AND
+			a.admin_id = t.admin_id
 	</select>
-	<insert id="">
-	
+	<insert id="insertByEmp" parameterType="Training">
+		INSERT INTO 
+		TRAININGS(
+			emp_id,
+			depart_id,
+			training_title,
+			training_content,
+			begin_time,
+			end_time,
+			admin_id,
+			attended
+		)VALUES(
+			#{emp.empId},
+			#{depart.dId},
+			#{trainingTitle},
+			#{trainingContent},
+			#{beginTime},
+			#{endTime},
+			#{admin.adminId},
+			1
+		)
 	</insert>
+	<update id="updateByEmpId">
+		UPDATE 
+			TRAININGS  
+		SET 
+			attended=0
+		WHERE 
+			emp_id = #{empId} 
+		AND 
+			attended=1
+	</update>
+	<select id="queryAll" resultType="Training">
+		SELECT 
+			training_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			training_title,
+			training_content,
+			begin_time,
+			end_time,
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			attended
+		FROM 
+			TRAININGS t,EMPLOYEES e,ADMINS a,DEPARTS d  
+		WHERE 
+			e.emp_id = t.emp_id 
+		AND
+			d.d_id = t.depart_id 
+		AND
+			a.admin_id = t.admin_id
+	</select>
+	<delete id="deleteById">
+		DELETE FROM 
+			TRAININGS 
+		WHERE 
+			training_id=#{trainingId}
+	</delete>
 </mapper>

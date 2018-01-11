@@ -4,20 +4,25 @@ import java.util.Date;
 
 public class RewardAndPunishment {
 	private int rapId;
-	private User user;
+	private Employee emp;
 	private double baseSalary;
 	private double rapSalary;
-	private String rapReason;
+	private int rapYear;
+	private int rapMonth;
 	private Date rapTime;
-	public RewardAndPunishment(int rapId, User user, double baseSalary, double rapSalary, String rapReason,
-			Date rapTime) {
+	private int pay;
+	
+	public RewardAndPunishment(int rapId, Employee emp, double baseSalary, double rapSalary, int rapYear, int rapMonth,
+			Date rapTime,int pay) {
 		super();
 		this.rapId = rapId;
-		this.user = user;
+		this.emp = emp;
 		this.baseSalary = baseSalary;
 		this.rapSalary = rapSalary;
-		this.rapReason = rapReason;
+		this.rapYear = rapYear;
+		this.rapMonth = rapMonth;
 		this.rapTime = rapTime;
+		this.pay=pay;
 	}
 	public RewardAndPunishment() {
 		super();
@@ -28,11 +33,11 @@ public class RewardAndPunishment {
 	public void setRapId(int rapId) {
 		this.rapId = rapId;
 	}
-	public User getUser() {
-		return user;
+	public Employee getEmp() {
+		return emp;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setEmp(Employee emp) {
+		this.emp = emp;
 	}
 	public double getBaseSalary() {
 		return baseSalary;
@@ -46,11 +51,17 @@ public class RewardAndPunishment {
 	public void setRapSalary(double rapSalary) {
 		this.rapSalary = rapSalary;
 	}
-	public String getRapReason() {
-		return rapReason;
+	public int getRapYear() {
+		return rapYear;
 	}
-	public void setRapReason(String rapReason) {
-		this.rapReason = rapReason;
+	public void setRapYear(int rapYear) {
+		this.rapYear = rapYear;
+	}
+	public int getRapMonth() {
+		return rapMonth;
+	}
+	public void setRapMonth(int rapMonth) {
+		this.rapMonth = rapMonth;
 	}
 	public Date getRapTime() {
 		return rapTime;
@@ -58,11 +69,19 @@ public class RewardAndPunishment {
 	public void setRapTime(Date rapTime) {
 		this.rapTime = rapTime;
 	}
+	public int getPay() {
+		return pay;
+	}
+	public void setPay(int pay) {
+		this.pay = pay;
+	}
 	@Override
 	public String toString() {
-		return "RewardAndPunishment [rapId=" + rapId + ", user=" + user + ", baseSalary=" + baseSalary + ", rapSalary="
-				+ rapSalary + ", rapReason=" + rapReason + ", rapTime=" + rapTime + "]";
+		return "RewardAndPunishment [rapId=" + rapId + ", emp=" + emp + ", baseSalary=" + baseSalary + ", rapSalary="
+				+ rapSalary + ", rapYear=" + rapYear + ", rapMonth=" + rapMonth + ", rapTime=" + rapTime + ", pay="
+				+ pay + "]";
 	}
+	
 	
 	
 }

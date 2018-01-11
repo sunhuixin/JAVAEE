@@ -2,10 +2,196 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iotek.shx.dao.RewardAndPunishmentDao">
-	<select id="">
-	
+	<select id="queryByEmpId" resultType="RewardAndPunishment">
+		SELECT 
+			rap_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			e.emp_email "emp.empEmail",
+			e.emp_political_status "emp.empPoliticalStatus",
+			d.d_id "emp.depart.dId",
+			d.d_name "emp.depart.dName",
+			p.p_id "emp.position.pid",
+			p.p_name "emp.position.pname",
+			base_salary,
+			rap_salary,
+			rap_time  
+		FROM 
+			RAPS r,
+			EMPLOYEES e,
+			DEPARTS d,
+			POSITIONS p 
+		WHERE 
+			r.emp_id=e.emp_id 
+		AND
+			e.depart_id=d.d_id 
+		AND 
+			e.position_id=p.p_id 
+		AND 
+			e.emp_id=#{empId}
 	</select>
-	<insert id="">
+	<insert id="insert" >
+		INSERT INTO 
+			RAPS(
+			emp_id,
+			base_salary,
+			rap_salary,
+			rap_year,
+			rap_month,
+			rap_time,
+			pay 
+			)  
+		VALUES 
+			(
+			#{emp.empId},
+			#{emp.baseSalary},
+			#{sum},
+			#{date.year}+1900,
+			#{date.month}+1,
+			#{date},
+			1
+			) 
+	</insert>
+	<update id="updateByEmpId">
+		UPDATE 
+			RAPS 
+		SET 
+			base_salary = #{emp.baseSalary}, 
+			rap_salary=#{sum}
+		WHERE 
+			emp_id=#{emp.empId}
+		AND
+			rap_year=#{date.year}+1900 
+		AND
+			rap_month=#{date.month}+1
+		AND
+			pay = 1
+	</update>
+	<select id="queryByEmpIdAndDate" resultType="RewardAndPunishment"> 
+		SELECT 
+			rap_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			e.emp_email "emp.empEmail",
+			e.emp_political_status "emp.empPoliticalStatus",
+			d.d_id "emp.depart.dId",
+			d.d_name "emp.depart.dName",
+			p.p_id "emp.position.pid",
+			p.p_name "emp.position.pname",
+			base_salary,
+			rap_salary,
+			rap_time
+		FROM 
+			RAPS r,
+			EMPLOYEES e,
+			DEPARTS d,
+			POSITIONS p 
+		WHERE 
+			r.emp_id=e.emp_id 
+		AND
+			e.depart_id=d.d_id 
+		AND 
+			e.position_id=p.p_id 
+		AND 
+			e.emp_id=#{empId} 
+		AND
+			rap_year=(#{date.year}+1900)
+		AND
+			rap_month=(#{date.month}+1)
+	</select>
+	<select id="queryByEmpIdBetween" resultType="RewardAndPunishment">
+		SELECT 
+			rap_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			e.emp_email "emp.empEmail",
+			e.emp_political_status "emp.empPoliticalStatus",
+			d.d_id "emp.depart.dId",
+			d.d_name "emp.depart.dName",
+			p.p_id "emp.position.pid",
+			p.p_name "emp.position.pname",
+			base_salary,
+			rap_salary,
+			rap_time
+		FROM 
+			RAPS r,
+			EMPLOYEES e,
+			DEPARTS d,
+			POSITIONS p 
+		WHERE 
+			r.emp_id=e.emp_id 
+		AND
+			e.depart_id=d.d_id 
+		AND 
+			e.position_id=p.p_id 
+		AND 
+			e.emp_id=#{empId} 
+		AND
+			rap_time 
+		BETWEEN 
+			#{startDate} 
+		And 
+			#{endDate}
+	</select>
 	
+	<select id="queryByDepartId" resultType="RewardAndPunishment">
+		SELECT 
+			rap_id,
+			e.emp_id "emp.empId",
+			e.emp_name "emp.empName",
+			e.emp_email "emp.empEmail",
+			e.emp_political_status "emp.empPoliticalStatus",
+			d.d_id "emp.depart.dId",
+			d.d_name "emp.depart.dName",
+			p.p_id "emp.position.pid",
+			p.p_name "emp.position.pname",
+			base_salary,
+			rap_salary,
+			rap_time,
+			pay   
+		FROM 
+			RAPS r,
+			EMPLOYEES e,
+			DEPARTS d,
+			POSITIONS p 
+		WHERE 
+			r.emp_id=e.emp_id 
+		AND
+			e.depart_id=d.d_id 
+		AND 
+			e.position_id=p.p_id 
+		AND 
+			d.d_id=#{dId}
+	</select>
+	<update id="updatePaydById">
+	UPDATE 
+		RAPS 
+	SET 
+		pay=0 
+	WHERE 
+		rap_id=#{rapId} 
+	AND 
+		pay = 1
+	</update>
+	<insert id="insertByRap">
+	INSERT INTO 
+		RAPS
+		(
+		emp_id,
+		base_salary,
+		rap_salary,
+		rap_time,
+		rap_year,
+		rap_month,
+		pay
+		)VALUES (
+		#{rap.emp.empId},
+		#{rap.base_salary},
+		#{rap.rap_salary},
+		#{date},
+		#{date.year}+1900,
+		#{date.month}+1,
+		1
+		)
 	</insert>
 </mapper>
