@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.ObjectionDao">
+	<update id="update2ByObjectionId">
+	UPDATE 
+		OBJECTIONS 
+	SET 
+		agreed=2 
+	WHERE 
+		objection_id=#{objectionId}
+</update>
+<update id="update1ByObjectionId">
+	UPDATE 
+		OBJECTIONS 
+	SET 
+		agreed=1,
+		objection_reason=#{objectionReason}
+	WHERE 
+		objection_id=#{objectionId}
+</update>
+<insert id="insertPunish">
+	INSERT INTO 
+		OBJECTIONS(
+		punish_id,
+		objection_reason,
+		admin_id,
+		emp_id,
+		agreed
+	)VALUES(
+		#{punishId},
+		#{objectionReason},
+		#{admin.adminId},
+		#{employee.empId},
+		0
+	)
+	</insert>
+	<insert id="insertReward">
+	INSERT INTO 
+		OBJECTIONS(
+		reward_id,
+		objection_reason,
+		admin_id,
+		emp_id,
+		agreed
+	)VALUES(
+		#{rewardId},
+		#{objectionReason},
+		#{admin.adminId},
+		#{employee.empId},
+		0
+	)
+	</insert>
+	<select id="queryByRewardId" resultType="Objection">
+		SELECT 
+			objection_id,
+			objection_reason,
+			agreed,
+			r.reward_id "reward.rewardId",
+			r.reward_reason "reward.rewardReason",
+			r.reward_money "reward.rewardMoney",
+			r.reward_time "reward.rewardTime",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			e.emp_id "employee.empId",
+			e.e_name "employee.empName" 
+		FROM 
+			OBJECTIONS o,REWARDS r,ADMINS a, EMPLOYEES e 
+		WHERE 
+			e.emp_id=o.emp_id 
+		AND
+			r.reward_id=o.reward_id 
+		AND
+			a.admin_id = o.admin_id 
+		AND
+			o.reward_id=#{rewardId}
+	</select>
+	<select id="queryByPunishmentId" resultType="Objection">
+		SELECT 
+			objection_id,
+			objection_reason,
+			agreed,
+			p.punish_id "punishment.punishId",
+			p.punish_reason "punishment.punishReason",
+			p.punish_money "punishment.punishMoney",
+			p.punish_time "punishment.punishTime",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			e.emp_id "employee.empId",
+			e.emp_name "employee.empName" 
+		FROM 
+			OBJECTIONS o,PUNISHMENTS p,ADMINS a, EMPLOYEES e  
+		WHERE 
+			e.emp_id=o.emp_id 
+		AND
+			p.punish_id=o.punish_id 
+		AND
+			a.admin_id = o.admin_id 
+		AND
+			p.punish_id=#{punishId}
+	</select>
+	<select id="queryRewardByAdminId" resultType="Objection">
+		SELECT 
+			objection_id,
+			objection_reason,
+			agreed,
+			r.reward_id "reward.rewardId",
+			r.reward_reason "reward.rewardReason",
+			r.reward_money "reward.rewardMoney",
+			r.reward_time "reward.rewardTime",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			e.emp_id "employee.empId",
+			e.emp_name "employee.empName" 
+		FROM 
+			OBJECTIONS o,ADMINS a, EMPLOYEES e,REWARDS r 
+		WHERE 
+			e.emp_id=o.emp_id 
+		AND 
+			a.admin_id = o.admin_id 
+		AND 
+			a.admin_id=#{adminId} 
+		AND 
+			agreed=0
+		AND 
+			r.reward_id = o.reward_id
+	</select>
+	<select id="queryPunishmentByAdminId" resultType="Objection">
+		SELECT 
+			objection_id,
+			objection_reason,
+			agreed,
+			p.punish_id "punishment.punishId",
+			p.punish_reason "punishment.punishReason",
+			p.punish_money "punishment.punishMoney",
+			p.punish_time "punishment.punishTime",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			e.emp_id "employee.empId",
+			e.emp_name "employee.empName" 
+		FROM 
+			OBJECTIONS o,ADMINS a, EMPLOYEES e,PUNISHMENTS p 
+		WHERE 
+			e.emp_id=o.emp_id 
+		AND 
+			a.admin_id = o.admin_id 
+		AND 
+			a.admin_id=#{adminId} 
+		AND 
+			agreed=0
+		AND 
+			p.punish_id = o.punish_id
+	</select>
+	<select id="queryPunishmentByEmpId" resultType="Objection">
+		SELECT 
+			objection_id,
+			objection_reason,
+			agreed,
+			p.punish_id "punishment.punishId",
+			p.punish_reason "punishment.punishReason",
+			p.punish_money "punishment.punishMoney",
+			p.punish_time "punishment.punishTime",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			e.emp_id "employee.empId",
+			e.emp_name "employee.empName" 
+		FROM 
+			OBJECTIONS o,ADMINS a, EMPLOYEES e,PUNISHMENTS p 
+		WHERE 
+			e.emp_id=o.emp_id 
+		AND 
+			a.admin_id = o.admin_id 
+		AND 
+			e.emp_id=#{empId} 
+		AND 
+			p.punish_id = o.punish_id
+	</select>
+	<select id="queryRewardByEmpId" resultType="Objection">
+		SELECT 
+			objection_id,
+			objection_reason,
+			agreed,
+			r.reward_id "reward.rewardId",
+			r.reward_reason "reward.rewardReason",
+			r.reward_money "reward.rewardMoney",
+			r.reward_time "reward.rewardTime",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			e.emp_id "employee.empId",
+			e.emp_name "employee.empName" 
+		FROM 
+			OBJECTIONS o,ADMINS a, EMPLOYEES e,REWARDS r 
+		WHERE 
+			e.emp_id=o.emp_id 
+		AND 
+			a.admin_id = o.admin_id 
+		AND 
+			e.emp_id=#{empId} 
+		AND 
+			r.reward_id = o.reward_id
+	</select>
+	<insert id="insertS">
+	INSERT INTO 
+		OBJECTIONS(
+		emp_id,
+		objection_reason,
+		rap_id,
+		admin_id,
+		agreed
+	)VALUES(
+		#{empId},
+		#{objectionReason},
+		#{rapId},
+		3,
+		0
+		)
+	</insert>
+	<select id="querySByEmpId" resultType="Objection">
+		SELECT 
+			objection_id,
+			objection_reason,
+			agreed,
+			r.rap_id "rap.rapId",
+			r.rap_time "rap.rapTime",
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			e.emp_id "employee.empId",
+			e.emp_name "employee.empName" 
+		FROM 
+				OBJECTIONS o,RAPS r,ADMINS a, EMPLOYEES e 
+		WHERE 
+			e.emp_id=o.emp_id 
+		AND
+			r.rap_id = o.rap_id 
+		AND
+			a.admin_id = o.admin_id 
+		AND 
+			e.emp_id =#{empId};
+	</select>
+</mapper>

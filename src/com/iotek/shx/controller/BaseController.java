@@ -6,6 +6,7 @@ import com.iotek.shx.service.AdministratorService;
 import com.iotek.shx.service.AttendanceService;
 import com.iotek.shx.service.DepartService;
 import com.iotek.shx.service.EmployeeService;
+import com.iotek.shx.service.ObjectionService;
 import com.iotek.shx.service.PositionService;
 import com.iotek.shx.service.PunishmentService;
 import com.iotek.shx.service.RecruitService;
@@ -41,6 +42,8 @@ public class BaseController {
 	private AttendanceService attendService;
 	@Autowired
 	private TrainingService trainService;
+	@Autowired
+	private ObjectionService objectionService;
 	
 	public UserService getUserService() {
 		return userService;
@@ -113,6 +116,12 @@ public class BaseController {
 	}
 	public void setTrainService(TrainingService trainService) {
 		this.trainService = trainService;
+	}
+	public ObjectionService getObjectionService() {
+		return objectionService;
+	}
+	public void setObjectionService(ObjectionService objectionService) {
+		this.objectionService = objectionService;
 	}
 	
 }
