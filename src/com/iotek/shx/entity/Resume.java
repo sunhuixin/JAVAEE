@@ -14,12 +14,12 @@ public class Resume {
 	private String politicalStatus;
 	private String lastJob;
 	private String workExpirence;
-	private String expectedSalary;
+	private double expectedSalary;
 	private String hobby;
 	
 	public Resume(int id, int userId, String realName, String gender, int age, String degree, String phoneNumber,
 			String email, Department depart, Position position, String politicalStatus, String lastJob,
-			String workExpirence, String expectedSalary, String hobby) {
+			String workExpirence, double expectedSalary, String hobby) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -38,7 +38,7 @@ public class Resume {
 		this.hobby = hobby;
 	}
 	public Resume(int userId, String realName, String gender, int age, String degree, String phoneNumber, String email,
-			Department depart, String politicalStatus, String lastJob, String workExpirence, String expectedSalary,
+			Department depart, String politicalStatus, String lastJob, String workExpirence, double expectedSalary,
 			String hobby,String sign) {
 		super();
 		this.userId = userId;
@@ -136,10 +136,10 @@ public class Resume {
 	public void setWorkExpirence(String workExpirence) {
 		this.workExpirence = workExpirence;
 	}
-	public String getExpectedSalary() {
+	public double getExpectedSalary() {
 		return expectedSalary;
 	}
-	public void setExpectedSalary(String expectedSalary) {
+	public void setExpectedSalary(double expectedSalary) {
 		this.expectedSalary = expectedSalary;
 	}
 	public String getHobby() {

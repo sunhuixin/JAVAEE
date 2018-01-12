@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.ResumeInfoDao">
+	<select id="queryByResumeId" resultType="ResumeInfo">
+		SELECT
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			r.id "resume.id",
+			r.user_id "resume.userId",
+			r.real_name "resume.realName",
+			r.gender "resume.gender",
+			r.email "resume.email",
+			r.hobby "resume.hobby",
+			r.expected_salary "resume.expectedSalary",
+			r.political_status "resume.politicalStatus",
+			r.work_expirence "resume.workExpirence",
+			r.degree "resume.degree",
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			p.p_id "position.pid",
+			p.p_name "position.pname",
+			check,
+			hire,
+			send
+		FROM
+			RESUMES r,DEPARTS d,POSITIONS p,RESUMEINFOS f,ADMINS a
+		WHERE
+			f.depart_id=d.d_id
+		AND
+			f.position_id=p.p_id
+		AND
+			f.resume_id=r.id
+		AND
+			f.admin_id=a.admin_id
+		AND
+			f.resume_id=#{id}
+	</select>
+	
+	<select id="queryByAdminId" resultType="ResumeInfo">
+		SELECT
+			a.admin_id "admin.adminId",
+			a.admin_name "admin.adminName",
+			r.id "resume.id",
+			r.user_id "resume.userId",
+			r.real_name "resume.realName",
+			r.gender "resume.gender",
+			r.email "resume.email",
+			r.hobby "resume.hobby",
+			r.expected_salary "resume.expectedSalary",
+			r.political_status "resume.politicalStatus",
+			r.work_expirence "resume.workExpirence",
+			r.degree "resume.degree",
+			d.d_id "depart.dId",
+			d.d_name "depart.dName",
+			p.p_id "position.pid",
+			p.p_name "position.pname",
+			check,
+			hire,
+			send
+		FROM
+			RESUMES r,DEPARTS d,POSITIONS p,RESUMEINFOS f,ADMINS a
+		WHERE
+			f.depart_id=d.d_id
+		AND
+			f.position_id=p.p_id
+		AND
+			f.resume_id=r.id
+		AND
+			f.admin_id=a.admin_id
+		AND
+			a.admin_id=#{adminId}
+	</select>
+	<select id="onlyQueryResumeId" resultType="int">
+		SELECT
+			resume_id
+		FROM
+			RESUMEINFOS
+	</select>
+	<update id="updateCheck">
+		UPDATE
+			RESUMEINFOS
+		SET
+			check=0
+		WHERE
+			resume_id=#{resumeId}
+	</update>
+	<update id="updateHire">
+		UPDATE
+			RESUMEINFOS
+		SET
+			hire=0
+		WHERE
+			resume_id=#{resumeId}
+	</update>
+	<delete id="deleteByResumeId">
+		DELETE FROM 
+			RESUMEINFOS 
+		WHERE 
+			resume_id=#{resumeId}
+	</delete>
+
+</mapper>

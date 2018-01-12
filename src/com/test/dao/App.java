@@ -96,11 +96,11 @@ public class App {
 		Resume resume = resumeDao.queryResume(1);
 		System.out.println(resume);
 	}
-	@Test
-	public void test10() {
-		int res = resumeDao.saveResume(new Resume(-1,1,"iotek","男",20,"硕士","13122223333","1312222@163.com",new Department(5,"技术部",new Date()),new Position(12,"技术总监",new Date(),new Department(5,"技术部",new Date())),"党员","java工程师","5年开发经验","5000-6000","打篮球"));
-		System.out.println(res);
-	}
+//	@Test
+//	public void test10() {
+//		int res = resumeDao.saveResume(new Resume(-1,1,"iotek","男",20,"硕士","13122223333","1312222@163.com",new Department(5,"技术部",new Date()),new Position(12,"技术总监",new Date(),new Department(5,"技术部",new Date())),"党员","java工程师","5年开发经验","5000-6000","打篮球"));
+//		System.out.println(res);
+//	}
 	
 	@Test
 	public void test11() {

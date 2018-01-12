@@ -1,37 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.7.2.js"></script>
 	<script type="text/javascript">
-		$(function(){
-			$("input[name='userName']").blur(function(){
-				var name=$(this).val();
-				if(name==""){
-					$("#user").text("用户名不能为空！")
-				}
-				$.ajax({
-					url:"${pageContext.request.contextPath}/user/findUserByName",
-					type:"post",
-					dataType:"text",
-					data:{name:name},
-					success:function(data){
-						if(data==0){
-							$("#user").text("用户名不正确！");
-						}else{
-							$("#user").text("");
-						}
-					}
-				})
-			})
-			$("input[name='password']").blur(function(){
-				var passsword = $(this).val();
-				if(password==""){
-					$("#pw").text("密码不能为空");
+	$(function(){	
+		$("#correct").hide();
+		$("#error").hide();
+		var zzUser=/^[a-zA-Z0-9_]{6,20}$/;
+		var zzPw=/^[a-zA-Z][a-zA-Z0-9_]{5,20}$/;
+		$("#name").blur(function() {
+		var name =$(this).val();	
+		if(zzUser.test(name)){
+			var url ="${pageContext.request.contextPath}/user/checkSame";
+			var args={"name":name};
+			$.get(url,args,function(data){
+				if(data==0){
+					$("#correct").show();
+					$("#error").hide();
+					$(".regist").removeAttr("disabled");
+				}else{
+					$("#error").show();
+					$("#correct").hide();
+					$(".regist").attr("disabled","disabled");
 				}
 			})
+		}else{
+			alert("请输入6-20位用户名,由字母或数字组成");
+			$(".regist").attr("disabled","disabled");
+			$("#error").show();
+			$("#correct").hide();
+		}
+		
+	})
+		$(".login").click(function(){
+			$("form").attr("action","${pageContext.request.contextPath}/user/login");
+			var password =$(":password").val();
+			if(password==""){
+				alert("密码不能为空");
+			}else{
+			$("form").submit();
+			}
 		})
+		$(".regist").click(function(){
+			$("form").attr("action","${pageContext.request.contextPath}/user/regist");
+			var password =$(":password").val();
+			if(zzPw.test(password)){
+				$("form").submit();
+			}else{
+				alert("请输入6-20位密码,由数字和字母组成,首写必须为字母");
+			}
+		})
+		
+	})
 	</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登录页面</title>
@@ -43,37 +66,50 @@
 			background-attachment:fixed;
 			background-size: cover;
 		}
+		#formD{
+		position: absolute;width:280px;left:50%;top:30%; 
+		margin-left:-140px;
+		background-color: white;
+		color: blue; 
+		}
+		td{
+			text-align: center;
+		}
 	</style>
 </head>
 <body >
-	<div align="center" style=" margin-top: 100px">
-	<form action="${pageContext.request.contextPath}/user/findUserByNameAndPassword" method="post">
-		<table >
-			<tr><td style="font-size:30px;color:red;text-align: center;"colspan="3">欢迎使用人力资源管理系统！</td></tr>
+	<div id="formD">
+	<form action="" method="post">
+		<table  cellpadding="8" cellspacing="0">
+		<tr><td colspan=2>欢迎使用人力资源系统</td></tr>
 			<tr>
-				<td>用户名</td>
-				<td><input type="text" name="userName" size="30" style="border-radius: 10px"></td>
-				<td><span style="color:red;"id="user"></span></td>
+				<td align="right">用户名:</td>
+				<td><input type="text" name="userName" id="name"></td>
 			</tr>
 			<tr>
-				<td>密码</td>
-				<td><input type="password" name="password" size="30" style="border-radius: 10px"></td>
-				<td><span style="color:red"id="pw"></span></td>
+				<td align="right">密&nbsp;码:</td>
+				<td><input type="password" name="password" width="100%"></td>
 			</tr>
 			<tr>
-				<td style="text-align: center;"><input type="submit" value="登录" size="20px" style=" text-align: center;border-radius: 10px;"></td>
-				
+				<td colspan="2" align="center"><input type="button" value="注册" class="regist"></td>
 			</tr>
 			<tr>
-				<td style="text-align: center;"><input type="reset" value="取消" size="20px" style=" text-align: center;border-radius: 10px;"></td>
+				<td colspan="2" align="center"><input type="button" value="登录" class="login"></td>
 			</tr>
+			<tr><td colspan=2><a href="${pageContext.request.contextPath}/admin/index">管理员登录</a></td></tr>
 			<tr>
-				<td style="color: red">快来加入我们吧！<a
-					href="${pageContext.request.contextPath }/user/toRegister"
-					style="color: yellow; font-size: 25px ; font-style: italic;">注册</a></td>
+			<td style="color: red" id="error" colspan="2" align="center">x用户名已存在或者不可用</td>
+			<td style="color: green" id="correct" colspan="2" align="center">用户名可用</td>
 			</tr>
+			<c:if test="${!empty requestScope.error}">
+			<tr><td colspan="2" align="center">
+				用户名:${requestScope.error.userName}&nbsp;密码:${requestScope.error.password}有误,请重新输入!
+			</td></tr>
+			</c:if>
 		</table>
+			
 	</form>
-	</div>
+	
+</div>
 </body>
 </html>

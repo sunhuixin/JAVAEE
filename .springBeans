@@ -22,6 +22,7 @@
 		<config>config/mapper/administratorMapper.xml</config>
 		<config>config/mapper/employeeMapper.xml</config>
 		<config>config/mapper/interviewMapper.xml</config>
+		<config>config/mapper/resumeInfo.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

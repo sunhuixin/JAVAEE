@@ -85,8 +85,12 @@ body {
 
 #div1{
 	background-color: #cc6666;
-	
 	height:100%;	
+	position: absolute;
+	width: 200px;
+	float: left;
+	
+	
 }
 
 #div2{

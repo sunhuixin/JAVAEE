@@ -39,4 +39,33 @@
 		WHERE 
 			user_id=#{userId}
 	</update>
+	<insert id="insertResumeInfo">
+	INSERT INTO 
+		RESUMEINFOS(
+		id,
+		admin_id,
+		depart_id,
+		p_id,
+		hired,
+		check,
+		send
+	)VALUES(
+		#{resume.id},
+		#{admin.adminId},
+		#{admin.depart.dId},
+		#{position.pid},
+		1,
+		1,
+		1)
+</insert>
+<select id="queryById" resultType="User">
+SELECT 
+	user_id,
+	user_name,
+	password 
+FROM 
+	users 
+WHERE 
+	user_id=#{userId}
+</select>
 </mapper>
