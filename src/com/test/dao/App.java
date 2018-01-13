@@ -13,12 +13,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.iotek.shx.dao.DepartmentDao;
 import com.iotek.shx.dao.PositionDao;
-import com.iotek.shx.dao.RecruitDao;
 import com.iotek.shx.dao.ResumeDao;
 import com.iotek.shx.dao.UserDao;
 import com.iotek.shx.entity.Department;
 import com.iotek.shx.entity.Position;
-import com.iotek.shx.entity.Recruit;
 import com.iotek.shx.entity.Resume;
 import com.iotek.shx.entity.User;
 
@@ -33,8 +31,7 @@ public class App {
 	private PositionDao positionDao;
 	@Autowired
 	private ResumeDao resumeDao;
-	@Autowired
-	private RecruitDao recruitDao;
+
 
 	@Test
 	public void test() {
@@ -78,11 +75,11 @@ public class App {
 		
 	}
 	
-	@Test
-	public void test6() {
-		int res = departDao.updateDepart(new Department(2,"销售部",new Date()));
-		System.out.println(res);
-	}
+//	@Test
+//	public void test6() {
+//		int res = departDao.updateDepart(new Department(2,"销售部",new Date()));
+//		System.out.println(res);
+//	}
 	
 	@Test
 	public void test7() {
@@ -102,9 +99,9 @@ public class App {
 //		System.out.println(res);
 //	}
 	
-	@Test
-	public void test11() {
-		int  res = recruitDao.saveRecruit(new Recruit(-1,"上海徐汇区",new Date(),"全职","不限","本科",6,"java开发","java开发","海同科技有限公司"));
-		System.out.println(res);
-	}
+//	@Test
+//	public void test11() {
+//		int  res = recruitDao.saveRecruit(new Recruit(-1,"上海徐汇区",new Date(),"全职","不限","本科",6,"java开发","java开发","海同科技有限公司"));
+//		System.out.println(res);
+//	}
 }

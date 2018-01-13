@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.iotek.shx.entity.Administrator;
 import com.iotek.shx.entity.Attendance;
 import com.iotek.shx.entity.Department;
+import com.iotek.shx.entity.Dimission;
 import com.iotek.shx.entity.Employee;
 import com.iotek.shx.entity.Interview;
 import com.iotek.shx.entity.Objection;
@@ -42,7 +43,7 @@ import com.iotek.shx.util.MyUtil;
 public class AdminController extends BaseController{
 	@RequestMapping("/showLeave")
 	public String showLeave(HttpSession session){
-		List<Leave> leaves = getLeaveService().getAll();
+		List<Dimission> leaves = getDimissionService().findAll();
 		System.out.println(leaves);
 		session.setAttribute("leaves", leaves);
 		return "forward:/WEB-INF/views/admin/showLeave.jsp";
@@ -69,7 +70,6 @@ public class AdminController extends BaseController{
 	String rewardReason = req.getParameter("rewardReason");
 	Double rewardMoney = Double.valueOf(req.getParameter("rewardMoney"));
 	Date date = Calendar.getInstance().getTime();
-	@SuppressWarnings("deprecation")
 	int month =date.getMonth();
 	if(month==11){
 		month=0;
@@ -115,9 +115,7 @@ public class AdminController extends BaseController{
 	public String showMonthCheck(Model model,@RequestParam("eid") Integer eid){
 		System.out.println(eid);
 		Date date = new Date();
-		@SuppressWarnings("deprecation")
 		Integer year = date.getYear();
-		@SuppressWarnings("deprecation")
 		Integer month = date.getMonth();
 		List<Attendance> checks = getAttendService().findByEmpId(eid);
 		List<Attendance> newChecks = new ArrayList<>();
@@ -211,7 +209,6 @@ public class AdminController extends BaseController{
 		Calendar c = Calendar.getInstance();
 		Date date = c.getTime();
 		Integer month = c.get(Calendar.MONTH);
-		@SuppressWarnings("deprecation")
 		int year = date.getYear();
 		if(month==0){
 			month=11;
@@ -360,14 +357,14 @@ public class AdminController extends BaseController{
 		System.out.println(aid);
 		recruitment.setTitle(MyUtil.EncoderByutf8(recruitment.getTitle()));
 		Administrator admin = getAdminService().findById(aid);
-		Position position = getPositionService().findById(pid);
-		Department dept = getDeptService().findById(deptId);
-		recruitment.setDept(dept);
+		Position position = getPositionService().findPosition(pid);
+		Department dept = getDeptService().findDepart(deptId);
+		recruitment.setDepart(dept);
 		recruitment.setPosition(position);
 		recruitment.setAdmin(admin);
 		System.out.println(recruitment);
-		boolean flag = getRecruitService().add(recruitment);
-		if (flag) {
+		int flag = getRecruitService().saveRecruit(recruitment);
+		if (flag>0) {
 			session.setAttribute("success", "success");
 			session.setAttribute("rCount", 1);
 		} else {
@@ -391,8 +388,8 @@ public class AdminController extends BaseController{
 	@RequestMapping("/resumeDetail")
 	public String resumeDetail(@Param("rid") Integer rid, Model model) {
 		Resume resume = getResumeService().findByResumeId(rid);
-		boolean flag = getResumeService().changeInfoCheckedById(rid);
-		ResumeInfo resumeInfo = getResumeInfoService().findByRid(rid);
+		getResumeService().changeInfoCheckedById(rid);
+		ResumeInfo resumeInfo = getResumeInfoService().findByResumeId(rid);
 		model.addAttribute("resume", resume);
 		model.addAttribute("resumeInfo", resumeInfo);
 		System.out.println(resume);
@@ -419,8 +416,8 @@ public class AdminController extends BaseController{
 	public String readyInterview(@Param("rid") Integer rid, Model model, HttpSession session) {
 		Administrator admin = (Administrator) session.getAttribute("admin");
 		System.out.println(rid);
-		Resume resume = getResumeService().findByRid(rid);
-		List<Employee> emps = getEmployeeService().findByDeptId(admin.getDept().getDeptId());
+		Resume resume = getResumeService().findByResumeId(rid);
+		List<Employee> emps = getEmployeeService().findByDepartId(admin.getDepart().getdId());
 		model.addAttribute("resume", resume);
 		model.addAttribute("emps", emps);
 		System.out.println(resume);
@@ -433,17 +430,17 @@ public class AdminController extends BaseController{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		Date date = df.parse(iTime);
 		System.out.println(iTime);
-		interview.setiTime(date);
-		Resume resume = getResumeService().findByRid(rid);
+		interview.setInterviewTime(date);
+		Resume resume = getResumeService().findByResumeId(rid);
 		System.out.println(rid);
 		interview.setResume(resume);
 		Administrator admin = (Administrator) session.getAttribute("admin");
 		System.out.println(admin);
 		interview.setAdmin(admin);
-		if (interview.getiInterviewer() != null) {
-			interview.setiInterviewer(MyUtil.EncoderByutf8(interview.getiInterviewer()));
+		if (interview.getInterviewer() != null) {
+			interview.setInterviewer(MyUtil.EncoderByutf8(interview.getInterviewer()));
 		}
-		interview.setiPlace(MyUtil.EncoderByutf8(interview.getiPlace()));
+		interview.setInterviewPlace(MyUtil.EncoderByutf8(interview.getInterviewPlace()));
 		System.out.println(interview);
 		boolean flag = getAdminService().sendInterview(interview);
 		if (flag) {
@@ -458,10 +455,10 @@ public class AdminController extends BaseController{
 	@RequestMapping("/employee")
 	public void employeeOne(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Integer rid = Integer.valueOf(req.getParameter("rid"));
-		Resume resume = getResumeService().findByRid(rid);
-		boolean flag = getEmployeeService().addOne(resume);
+		Resume resume = getResumeService().findByResumeId(rid);
+		int flag = getEmployeeService().add(resume);
 		PrintWriter out = resp.getWriter();
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
 			out.print(1);
@@ -471,9 +468,9 @@ public class AdminController extends BaseController{
 	@RequestMapping("/unEmployee")
 	public void unEmployee(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Integer rid = Integer.valueOf(req.getParameter("rid"));
-		boolean flag = getResumeInfoService().deleteByRid(rid);
+		int flag = getResumeInfoService().deleteByResumeId(rid);
 		PrintWriter out = resp.getWriter();
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
 			out.print(1);
@@ -483,9 +480,9 @@ public class AdminController extends BaseController{
 	@RequestMapping("/rdsupervisePosition")
 	public String supervisePosition(HttpSession session, Model model) {
 		Administrator admin = (Administrator) session.getAttribute("admin");
-		int deptId = admin.getDept().getDeptId();
-		List<Position> positions = getPositionService().findAllByDeptId(deptId);
-		Department dept = getDeptService().findById(deptId);
+		int deptId = admin.getDepart().getdId();
+		List<Position> positions = getPositionService().findPositionsByDepartId(deptId);
+		Department dept = getDeptService().findDepart(deptId);
 		session.setAttribute("positions", positions);
 		session.setAttribute("dept", dept);
 		return "forward:/WEB-INF/views/admin/position.jsp";
@@ -493,7 +490,7 @@ public class AdminController extends BaseController{
 
 	@RequestMapping("/rdsuperviseDept")
 	public String rdsuperviseDept(Model model) {
-		List<Department> depts = getDeptService().getAllDept();
+		List<Department> depts = getDeptService().findAllDepart();
 
 		model.addAttribute("depts", depts);
 		return "forward:/WEB-INF/views/admin/dept.jsp";
@@ -504,11 +501,11 @@ public class AdminController extends BaseController{
 	public String changePosition(@Param("eid") Integer eid, @Param("deptId") Integer deptId,
 			@Param("pid") Integer pid,HttpSession session) {
 		System.out.println("eid" + eid + "deptID" + deptId + "pid" + pid);
-		boolean flag = getEmployeeService().changePostion(eid, deptId, pid);
-		if(flag){
-			List<Employee> employees = getEmployeeService().findByDeptId(deptId);
-			List<Department> depts = getDeptService().getAll();
-			List<Employee> emps = getEmployeeService().getAll();
+		int flag = getEmployeeService().updatePosition(eid, deptId, pid);
+		if(flag>0){
+			List<Employee> employees = getEmployeeService().findByDepartId(deptId);
+			List<Department> depts = getDeptService().findAllDepart();
+			List<Employee> emps = getEmployeeService().findAll();
 			session.setAttribute("employees", employees);
 			session.setAttribute("depts", depts);
 			session.setAttribute("emps", emps);
@@ -526,9 +523,9 @@ public class AdminController extends BaseController{
 		}
 		Double addSalary = Double.valueOf(adds);
 		System.out.println(addSalary);
-		boolean flag = getEmployeeService().changeSalaryByEid(eid, addSalary);
+		int flag = getEmployeeService().updateSalaryByEmpId(eid, addSalary);
 		PrintWriter out = resp.getWriter();
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
 			out.print(1);
@@ -538,42 +535,42 @@ public class AdminController extends BaseController{
 	@RequestMapping("/rdAddTrains")
 	public String rdAddTrains(HttpSession session, Model model) {
 		Administrator admin = (Administrator) session.getAttribute("admin");
-		if (admin.getaLevel() == 2) {
-			List<Employee> emps = getEmployeeService().findByDeptId(admin.getDept().getDeptId());
+		if (admin.getAdminlevel() == 2) {
+			List<Employee> emps = getEmployeeService().findByDepartId(admin.getDepart().getdId());
 			model.addAttribute("emps", emps);
 			return "forward:/WEB-INF/views/admin/addTrains.jsp";
 		} else {
-			List<Employee> emps = getEmployeeService().getAll();
+			List<Employee> emps = getEmployeeService().findAll();
 			System.out.println(emps);
 			model.addAttribute("emps", emps);
-			List<Department> depts = getDeptService().getAll();
+			List<Department> depts = getDeptService().findAllDepart();
 			model.addAttribute("depts", depts);
 			return "forward:/WEB-INF/views/admin/addTrains.jsp";
 		}
 	}
 
 	@RequestMapping("/addTrains")
-	public String addTraining(Model model, HttpSession session, Train train, @Param("eid") Integer eid,
+	public String addTraining(Model model, HttpSession session, Training train, @Param("eid") Integer eid,
 			@Param("duration") Integer duration, @RequestParam("startTime1") String startTime) throws ParseException, UnsupportedEncodingException {
 		System.out.println(startTime);
 		Administrator admin = (Administrator) session.getAttribute("admin");
-		Department dept = getDeptService().findById(admin.getDept().getDeptId());
+		Department dept = getDeptService().findDepart(admin.getDepart().getdId());
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		Date start = df.parse(startTime);
 		long addtime = duration * 1000 * 60 * 60 * 24;
 		long endtime = start.getTime() + addtime;
 		Date end = new Date(endtime);
-		Employee emp = getEmployeeService().findByEid(eid);
-		train.settTitle(MyUtil.EncoderByutf8(train.gettTitle()));
-		train.settContent(MyUtil.EncoderByutf8(train.gettContent()));
+		Employee emp = getEmployeeService().findByEmpId(eid);
+		train.setTrainingTitle(MyUtil.EncoderByutf8(train.getTrainingTitle()));
+		train.setTrainingContent(MyUtil.EncoderByutf8(train.getTrainingContent()));
 		train.setBeginTime(start);
 		train.setAdmin(admin);
 		train.setEndTime(end);
-		train.setEmployee(emp);
-		train.setDept(dept);
+		train.setEmp(emp);
+		train.setDepart(dept);
 		System.out.println(train);
-		boolean flag = getTrainService().addByEmp(train);
-		if (flag) {
+		int flag = getTrainService().insertByEmp(train);
+		if (flag>0) {
 			model.addAttribute("trainOk", "ok");
 		} else {
 			model.addAttribute("trainOk", "no");
@@ -581,32 +578,32 @@ public class AdminController extends BaseController{
 		return "forward:/WEB-INF/views/admin/adminShow.jsp";
 	}
 
-	@RequestMapping("/addSuperTrains")
-	public String addSuperTrains(Model model, HttpSession session, Training train,
-			@RequestParam(value = "eid3",required=false) Integer[] eids, @RequestParam("duration") Integer duration,
-			@RequestParam("startTime1") String startTime, @RequestParam(value="deptId",required=false) Integer[] deptIds)
-			throws ParseException {
-
-		System.out.println(eids);
-		System.out.println(deptIds);
-		
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		Date start = df.parse(startTime);
-		long addtime = duration * 1000 * 60 * 60 * 24;
-		long endtime = start.getTime() + addtime;
-		Date end = new Date(endtime);
-		Administrator admin = (Administrator) session.getAttribute("admin");
-		train.setAdmin(admin);
-		train.setBeginTime(start);
-		train.setEndTime(end);
-		if(eids!=null||deptIds!=null){
-		int res = getTrainService().addBySuperAdmin(train, eids, deptIds);
-		if(res>0){
-			model.addAttribute("num", res);
-		}
-		}
-		
-		// return "forward:/WEB-INF/views/admin/adminShow.jsp";
-		return "forward:/WEB-INF/views/admin/adminShow.jsp";
-	}
+//	@RequestMapping("/addSuperTrains")
+//	public String addSuperTrains(Model model, HttpSession session, Training train,
+//			@RequestParam(value = "eid3",required=false) Integer[] eids, @RequestParam("duration") Integer duration,
+//			@RequestParam("startTime1") String startTime, @RequestParam(value="deptId",required=false) Integer[] deptIds)
+//			throws ParseException {
+//
+//		System.out.println(eids);
+//		System.out.println(deptIds);
+//		
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+//		Date start = df.parse(startTime);
+//		long addtime = duration * 1000 * 60 * 60 * 24;
+//		long endtime = start.getTime() + addtime;
+//		Date end = new Date(endtime);
+//		Administrator admin = (Administrator) session.getAttribute("admin");
+//		train.setAdmin(admin);
+//		train.setBeginTime(start);
+//		train.setEndTime(end);
+//		if(eids!=null||deptIds!=null){
+//		int res = getTrainService().addBySuperAdmin(train, eids, deptIds);
+//		if(res>0){
+//			model.addAttribute("num", res);
+//		}
+//		}
+//		
+//		// return "forward:/WEB-INF/views/admin/adminShow.jsp";
+//		return "forward:/WEB-INF/views/admin/adminShow.jsp";
+//	}
 }

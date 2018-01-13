@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.iotek.shx.service.AdministratorService;
 import com.iotek.shx.service.AttendanceService;
 import com.iotek.shx.service.DepartService;
+import com.iotek.shx.service.DimissionService;
 import com.iotek.shx.service.EmployeeService;
 import com.iotek.shx.service.ObjectionService;
 import com.iotek.shx.service.PositionService;
 import com.iotek.shx.service.PunishmentService;
 import com.iotek.shx.service.RecruitService;
+import com.iotek.shx.service.ResumeInfoService;
 import com.iotek.shx.service.ResumeService;
 import com.iotek.shx.service.RewardAndPunishmentService;
 import com.iotek.shx.service.RewardService;
@@ -44,6 +46,10 @@ public class BaseController {
 	private TrainingService trainService;
 	@Autowired
 	private ObjectionService objectionService;
+	@Autowired
+	private ResumeInfoService resumeInfoService;
+	@Autowired
+	private DimissionService dimissionService;
 	
 	public UserService getUserService() {
 		return userService;
@@ -123,5 +129,18 @@ public class BaseController {
 	public void setObjectionService(ObjectionService objectionService) {
 		this.objectionService = objectionService;
 	}
+	public ResumeInfoService getResumeInfoService() {
+		return resumeInfoService;
+	}
+	public void setResumeInfoService(ResumeInfoService resumeInfoService) {
+		this.resumeInfoService = resumeInfoService;
+	}
+	public DimissionService getDimissionService() {
+		return dimissionService;
+	}
+	public void setDimissionService(DimissionService dimissionService) {
+		this.dimissionService = dimissionService;
+	}
+	
 	
 }

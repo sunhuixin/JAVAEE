@@ -14,4 +14,6 @@ public interface TrainingService {
 	public List<Training> queryAll();
 
 	public int deleteById(int trainId);
+	
+	public int addBySuperAdmin(Training train, Integer[] eids, Integer[] deptIds);
 }

@@ -3,34 +3,41 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iotek.shx.dao.RecruitDao">
 	<select id="queryAll" resultType="Recruit">
-		SELECT * FROM RECRUITS
+		SELECT 
+			recruit_id,
+			salary,
+			title,
+			d_id "depart.dId",
+			d_name "depart.dName",
+			p_id "position.pid",
+			p_name "position.pname" 
+		FROM 
+			RECRUITS r,
+			POSITIONS p,
+			DEPARTS d 
+		WHERE 
+			depart_id = d.d_id 
+		AND 
+			position_id =p.p_id
 	</select>
 	<delete id="deleteRecruit" parameterType="int">
 		DELETE FROM RECRUITS
 		WHERE r_id=#{rid}
 	</delete>
 	<insert id="saveRecruit" parameterType="Recruit">
-		INSERT INTO RECRUITS (
-			work_place,
-			release_time,
-			job_type,
-			work_experience,
-			min_degree,
-			need_number,
-			position_category,
-			position_decription,
-			company_profile
-		)values(
-			#{workPlace},
-			#{releaseTime},
-			#{jobType},
-			#{workExperience},
-			#{minDegree},
-			#{needNumber},
-			#{positionCategory},
-			#{positionDecription},
-			#{companyProfile}
-		)
+		INSERT INTO 
+		RECRUITS(
+			depart_id,
+			position_id,
+			admin_id,
+			salary,
+			title
+	)VALUES(
+		#{depart.dId},
+		#{position.pid},
+		#{admin.adminId},
+		#{salary},
+		#{title})
 	</insert>
 	<update id="updateRecruit" parameterType="Recruit">
 		UPDATE RECRUITS SET

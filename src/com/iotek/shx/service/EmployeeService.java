@@ -14,7 +14,7 @@ public interface EmployeeService {
 	
 	public Employee findByEmpId(int empId);
 
-	public int updateByEmpId(@Param("empId")int empId,@Param("departId")int departId,@Param("positionId")int positionId);
+	public int updatePosition(@Param("empId")int empId,@Param("departId")int departId,@Param("positionId")int positionId);
 
 	public int updateSalaryByEmpId(@Param("empId")int empId,@Param("addSalary")Double addSalary);
 	

@@ -38,4 +38,10 @@ public class TrainingServiceImpl implements TrainingService {
 		return trainDao.deleteById(trainId);
 	}
 
+	@Override
+	public int addBySuperAdmin(Training train, Integer[] eids, Integer[] deptIds) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

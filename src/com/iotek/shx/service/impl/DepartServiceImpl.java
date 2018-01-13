@@ -23,8 +23,8 @@ public class DepartServiceImpl implements DepartService {
 	}
 
 	@Override
-	public int updateDepart(Department depart) {
-		return departDao.updateDepart(depart);
+	public int updateDepart(int dId,String dName) {
+		return departDao.updateDepart(dId,dName);
 	}
 
 	@Override

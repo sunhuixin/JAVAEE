@@ -35,10 +35,12 @@
 			d_id=#{dId}
 	</delete>
 	<update id="updateDepart" parameterType="Department">
-		UPDATE DEPARTS SET 
+		UPDATE 
+			DEPARTS 
+		SET 
 			d_name=#{dName},
-			create_time=#{createTime}
-		WHERE d_id=#{dId}
+		WHERE 
+			d_id=#{dId}
 	</update>
 	<select id="queryDepart" resultMap="ResultDepart">
 		SELECT * FROM 

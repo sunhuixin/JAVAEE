@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.shx.dao.DimissionDao">
+	<insert id="insert">
+		INSERT INTO 
+		DIMISSIONS(
+			emp_id,
+			dimiss_reason,
+			time,
+			d_name,
+			p_name
+		)VALUES(
+			#{employee.empId},
+			#{dimissReason},
+			now(),
+			#{employee.depart.dName},
+			#{employee.position.pname})
+	</insert>
+	
+	<select id="queryAll" resultType="Dimission">
+		SELECT 
+			dimiss_id,
+			dimiss_reason,
+			time,
+			e.emp_id "employee.empId",
+			e.emp_name "employee.empName",
+			d_ame,
+			p_name 
+		FROM 
+			DIMISSIONS m,EMPLOYEES e,DEPARTS d,POSITIONS p
+		WHERE 
+			e.emp_id = m.emp_id
+</select>
+</mapper>
+	

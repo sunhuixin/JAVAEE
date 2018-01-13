@@ -30,118 +30,125 @@ import com.iotek.shx.entity.RewardAndPunishment;
 import com.iotek.shx.util.MyUtil;
 
 @Controller()
-public class EmployeeController extends BaseController{
+public class EmployeeController extends BaseController {
 	@RequestMapping("salaryObj")
-	public void salaryObj(HttpServletRequest req,HttpServletResponse resp) throws IOException{
-		PrintWriter out =resp.getWriter();
-		Integer eid =Integer.valueOf(req.getParameter("eid"));
-		Integer rapId=Integer.valueOf(req.getParameter("rapId"));
-		String oReason =req.getParameter("oReason");
-		System.out.println(eid+" "+rapId+" "+oReason);
-		int flag = getObjectionService().addObjectionSalary(eid,rapId,oReason);
+	public void salaryObj(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		PrintWriter out = resp.getWriter();
+		Integer eid = Integer.valueOf(req.getParameter("eid"));
+		Integer rapId = Integer.valueOf(req.getParameter("rapId"));
+		String oReason = req.getParameter("oReason");
+		System.out.println(eid + " " + rapId + " " + oReason);
+		int flag = getObjectionService().addObjectionSalary(eid, rapId, oReason);
 		System.out.println(flag);
-		if(flag>0){
+		if (flag > 0) {
 			out.print(0);
-		}else{
+		} else {
 			out.print(1);
 		}
 	}
+
 	@RequestMapping("/myObjection")
-	public String myObjection(HttpSession session,@RequestParam("eid")Integer eid){
+	public String myObjection(HttpSession session, @RequestParam("eid") Integer eid) {
 		List<Objection> pObjections = getObjectionService().queryPunishmentByEmpId(eid);
 		List<Objection> rObjections = getObjectionService().queryRewardByEmpId(eid);
-		List<Objection> sObjections =getObjectionService().querySByEmpId(eid);
+		List<Objection> sObjections = getObjectionService().querySByEmpId(eid);
 		session.setAttribute("pObjections", pObjections);
 		session.setAttribute("rObjections", rObjections);
 		session.setAttribute("sObjections", sObjections);
-		return "forward:/emp/myObj.jsp";
+		return "forward:/WEB-INF/views/emp/myObj.jsp";
 	}
+
 	@RequestMapping("/homePage")
-	public String homePage(){
-		return "forward:/emp/empShow.jsp";
+	public String homePage() {
+		return "forward:/WEB-INF/views/emp/empShow.jsp";
 	}
+
 	@RequestMapping("/overTime")
-	public void overTime(HttpServletRequest req,HttpServletResponse resp) throws IOException{
+	public void overTime(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Reward reward = new Reward();
 		Date date = new Date();
-		int totaldays=MyUtil.totalDays(date);
+		int totaldays = MyUtil.totalDays(date);
 		Administrator admin = getAdminService().findById(0);
-		Integer empId =Integer.valueOf(req.getParameter("eid"));
+		Integer empId = Integer.valueOf(req.getParameter("eid"));
 		Employee employee = getEmployeeService().findByEmpId(empId);
-		reward.setRewardMoney((employee.getBaseSalary()/totaldays));
+		reward.setRewardMoney((employee.getBaseSalary() / totaldays));
 		reward.setRewardReason("¼Ó°à");
 		reward.setAdmin(admin);
 		reward.setEmp(employee);
-		PrintWriter out =resp.getWriter();
+		PrintWriter out = resp.getWriter();
 		reward.setRewardTime(date);
 		boolean flag = getRewardService().overTime(reward);
-		if(flag){
+		if (flag) {
 			out.print(0);
-		}else{
+		} else {
 			out.print(1);
 		}
 	}
+
 	@RequestMapping("/objectPunish")
-	public void objectPunish(HttpServletRequest req,HttpServletResponse resp) throws IOException{
+	public void objectPunish(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Integer eid = Integer.valueOf(req.getParameter("eid"));
-		Integer pid= Integer.valueOf(req.getParameter("pid"));
-		String oReason=req.getParameter("oReason");
+		Integer pid = Integer.valueOf(req.getParameter("pid"));
+		String oReason = req.getParameter("oReason");
 		System.out.println(oReason);
 		Employee employee = getEmployeeService().findByEmpId(eid);
 		Integer aid = Integer.valueOf(req.getParameter("aid"));
-		if(aid==0){
-			aid=3;
+		if (aid == 0) {
+			aid = 3;
 		}
 		Administrator admin = getAdminService().findById(aid);
-		System.out.println(eid+"pid"+pid+"");
-		int flag =getObjectionService().insertPunish(employee,pid,oReason,admin);
+		System.out.println(eid + "pid" + pid + "");
+		int flag = getObjectionService().insertPunish(employee, pid, oReason, admin);
 		System.out.println(flag);
 		PrintWriter out = resp.getWriter();
-		if(flag>0){
+		if (flag > 0) {
 			out.print(0);
-		}else{
+		} else {
 			out.print(1);
-		}	
+		}
 	}
+
 	@RequestMapping("/objectReward")
-	public void objectReward(HttpServletRequest req,HttpServletResponse resp) throws IOException{
+	public void objectReward(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Integer eid = Integer.valueOf(req.getParameter("eid"));
-		Integer rewardId= Integer.valueOf(req.getParameter("rewardId"));
-		String oReason=req.getParameter("oReason");
+		Integer rewardId = Integer.valueOf(req.getParameter("rewardId"));
+		String oReason = req.getParameter("oReason");
 		System.out.println(oReason);
 		Employee employee = getEmployeeService().findByEmpId(eid);
 		Integer aid = Integer.valueOf(req.getParameter("aid"));
-		if(aid==0){
-			aid=3;
+		if (aid == 0) {
+			aid = 3;
 		}
 		Administrator admin = getAdminService().findById(aid);
-		int flag =getObjectionService().insertReward(employee,rewardId,oReason,admin);
+		int flag = getObjectionService().insertReward(employee, rewardId, oReason, admin);
 		PrintWriter out = resp.getWriter();
-		if(flag>0){
+		if (flag > 0) {
 			out.print(0);
-		}else{
+		} else {
 			out.print(1);
-		}	
+		}
 	}
+
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/showMonthCheck")
-	public String showMonthCheck(@RequestParam("date")String date,@RequestParam("eid") Integer eid,Model model) throws ParseException {
+	public String showMonthCheck(@RequestParam("date") String date, @RequestParam("eid") Integer eid, Model model)
+			throws ParseException {
 		System.out.println(date);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
 		Date date1 = df.parse(date);
-		Integer year=date1.getYear();
-		Integer month=date1.getMonth();
-		int totaldays=MyUtil.totalDays(date1);
-		
+		Integer year = date1.getYear();
+		Integer month = date1.getMonth();
+		int totaldays = MyUtil.totalDays(date1);
+
 		List<Attendance> checks = getAttendService().findByEmpId(eid);
 		List<Attendance> newChecks = new ArrayList<>();
 		for (Attendance check : checks) {
-			if(check.getDate().getYear()==year&&check.getDate().getMonth()==month){
+			if (check.getDate().getYear() == year && check.getDate().getMonth() == month) {
 				newChecks.add(check);
 			}
 		}
 		int count = newChecks.size();
-		int absent = totaldays-count;
+		int absent = totaldays - count;
 		System.out.println(newChecks);
 		model.addAttribute("eid", eid);
 		model.addAttribute("checks", newChecks);
@@ -163,7 +170,7 @@ public class EmployeeController extends BaseController{
 		System.out.println(emp);
 		System.out.println("startDate:" + startDate + "endDate:" + endDate);
 		List<RewardAndPunishment> raps = getRapService().queryByEmpIdBetween(eid, startDate, endDate);
-		HashMap<RewardAndPunishment, Double> sums =  new HashMap<RewardAndPunishment, Double>();
+		HashMap<RewardAndPunishment, Double> sums = new HashMap<RewardAndPunishment, Double>();
 		for (RewardAndPunishment rap : raps) {
 			sums.put(rap, rap.getBaseSalary() + rap.getRapSalary());
 			System.out.println(rap);
@@ -179,15 +186,15 @@ public class EmployeeController extends BaseController{
 				date.setMonth(date.getMonth() - 1);
 			}
 			RewardAndPunishment rap = getRapService().queryByEmpIdAndDate(eid, date);
-			if(rap!=null){
-			raps.add(rap);
-			sums.put(rap, rap.getBaseSalary() + rap.getRapSalary());
-			model.addAttribute("none", "none");
+			if (rap != null) {
+				raps.add(rap);
+				sums.put(rap, rap.getBaseSalary() + rap.getRapSalary());
+				model.addAttribute("none", "none");
 			}
 		}
 		model.addAttribute("sums", sums);
 		model.addAttribute("raps", raps);
-		return "forward:/emp/showSalary.jsp";
+		return "forward:/WEB-INF/views/emp/showSalary.jsp";
 	}
 
 	@RequestMapping("/changeAbsent")
@@ -197,7 +204,7 @@ public class EmployeeController extends BaseController{
 		int flag = getAttendService().updateLate2(eid, date);
 		PrintWriter out = resp.getWriter();
 		System.out.println(flag);
-		if (flag>0) {
+		if (flag > 0) {
 			out.print(0);
 		} else {
 			out.print("no");
@@ -210,7 +217,7 @@ public class EmployeeController extends BaseController{
 		Date date = new Date();
 		int flag = getAttendService().updateLate0(eid, date);
 		PrintWriter out = resp.getWriter();
-		if (flag>0) {
+		if (flag > 0) {
 			out.print(0);
 		} else {
 			out.print("no");
@@ -223,7 +230,7 @@ public class EmployeeController extends BaseController{
 		Date date = new Date();
 		int flag = getAttendService().updateLate1(eid, date);
 		PrintWriter out = resp.getWriter();
-		if (flag>0) {
+		if (flag > 0) {
 			out.print(0);
 		} else {
 			out.print("no");
@@ -232,15 +239,15 @@ public class EmployeeController extends BaseController{
 
 	@RequestMapping("/attendTrain")
 	public void attendTrain(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		PrintWriter out = resp.getWriter();	 
-		Integer eid=0;
-		if(req.getParameter("eid")!=""){
-			eid =Integer.valueOf(req.getParameter("eid"));
-		}else{
-		out.print(2);	
+		PrintWriter out = resp.getWriter();
+		Integer eid = 0;
+		if (req.getParameter("eid") != "") {
+			eid = Integer.valueOf(req.getParameter("eid"));
+		} else {
+			out.print(2);
 		}
 		int flag = getTrainService().updateByEmpId(eid);
-		if (flag>0) {
+		if (flag > 0) {
 			out.print(0);
 		} else {
 			out.print(1);
@@ -254,12 +261,12 @@ public class EmployeeController extends BaseController{
 		model.addAttribute("emps", emps);
 		List<Administrator> admins = getAdminService().findByDepartId(deptId);
 		model.addAttribute("admins", admins);
-		return "forward:/emp/showAll.jsp";
+		return "forward:/WEB-INF/views/emp/showAll.jsp";
 	}
 
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/showSalary")
-	public String showSalary(@Param("eid") Integer eid, Model model,HttpSession session) {
+	public String showSalary(@Param("eid") Integer eid, Model model, HttpSession session) {
 		Employee emp = getEmployeeService().findByEmpId(eid);
 		System.out.println(emp);
 		Date date = new Date();
@@ -271,14 +278,14 @@ public class EmployeeController extends BaseController{
 		}
 		System.out.println(date);
 		RewardAndPunishment rap = getRapService().queryByEmpIdAndDate(eid, date);
-		if(rap!=null){
-		System.out.println("rap" + rap);
-		
-		double sum = rap.getBaseSalary() + rap.getRapSalary();
-		model.addAttribute("sum", sum);
+		if (rap != null) {
+			System.out.println("rap" + rap);
+
+			double sum = rap.getBaseSalary() + rap.getRapSalary();
+			model.addAttribute("sum", sum);
 		}
 		model.addAttribute("rap", rap);
-		return "forward:/emp/showSalary.jsp";
+		return "forward:/WEB-INF/views/emp/showSalary.jsp";
 	}
 
 	@RequestMapping("/rapRecords")
@@ -298,7 +305,7 @@ public class EmployeeController extends BaseController{
 			sum -= punishment.getPunishMoney();
 		}
 		model.addAttribute("sum", sum);
-		return "forward:/emp/showRAP.jsp";
+		return "forward:/WEB-INF/views/emp/showRAP.jsp";
 	}
 
 	@RequestMapping("/checkOn")
@@ -316,7 +323,7 @@ public class EmployeeController extends BaseController{
 		System.out.println(date);
 		int flag = getAttendService().addOnTimeByEmpId(eid, date, time);
 		PrintWriter out = resp.getWriter();
-		if (flag>0) {
+		if (flag > 0) {
 			out.print(0);
 		} else {
 
@@ -339,7 +346,7 @@ public class EmployeeController extends BaseController{
 		System.out.println(date);
 		int flag = getAttendService().updateOffTimeByEmpId(eid, date, time);
 		PrintWriter out = resp.getWriter();
-		if (flag>0) {
+		if (flag > 0) {
 			out.print(0);
 		} else {
 			out.print(1);

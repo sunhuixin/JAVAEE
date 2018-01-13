@@ -19,12 +19,11 @@
 		WHERE p_id=#{pid}
 	</delete>
 	<update id="updatePosition" parameterType="Position">
-		UPDATE POSITIONS SET
+		UPDATE 
+			POSITIONS 
+		SET
 			p_name=#{pname},
-			create_time={createTime}
 		WHERE 
-			depart_id=#{depart.dId}
-		AND
 			p_id=#{pid}
 	</update>
 	<select id="queryPosition" resultType="Position">
@@ -36,6 +35,18 @@
 				POSITIONS
 		WHERE 
 				p_id=#{pid}
+	</select>
+	<select id="queryPositionsByDepartId" resultType="Position">
+		SELECT 
+			p_id,
+			p_name,
+			generate_time
+		FROM
+			POSITIONS p,DEPARTS d
+		WHERE 
+			p.depart_id=d.d_id
+		AND 
+			d_id=#{dId}
 	</select>
 	
 	

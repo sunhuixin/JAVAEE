@@ -27,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public int updateByEmpId(int empId, int departId, int positionId) {
+	public int updatePosition(int empId, int departId, int positionId) {
 		return empDao.updateByEmpId(empId, departId, positionId);
 	}
 

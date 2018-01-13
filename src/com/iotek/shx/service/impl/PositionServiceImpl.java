@@ -1,5 +1,7 @@
 package com.iotek.shx.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +23,25 @@ public class PositionServiceImpl implements PositionService {
 	}
 
 	@Override
-	public int updatePosition(Position position) {
-		return positionDao.updatePosition(position);
+	public int updatePosition(int pid,String pname,int departId) {
+		List<Position> positions = positionDao.queryPositionsByDepartId(departId);
+		int flag=0;
+		for (Position position : positions) {
+			if(position.getPname().equals(pname)) {
+				 flag = positionDao.updatePosition(pid, pname);
+			}
+		}
+		return flag;
 	}
 
 	@Override
 	public Position findPosition(int pId) {
 		return positionDao.queryPosition(pId);
+	}
+
+	@Override
+	public List<Position> findPositionsByDepartId(int id) {
+		return positionDao.queryPositionsByDepartId(id);
 	}
 
 }

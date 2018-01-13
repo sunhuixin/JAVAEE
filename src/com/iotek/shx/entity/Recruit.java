@@ -1,109 +1,65 @@
 package com.iotek.shx.entity;
 
-import java.util.Date;
-
 public class Recruit {
-//	职位月薪：4001-6000元/月 上海工资计算器
-//	工作地点：上海
-//	发布日期：最新
-//	工作性质：全职
-//	工作经验：不限
-//	最低学历：大专
-//	招聘人数：3人 
-//	职位类别：软件工程师
-	private int rid;
-	private String workPlace;
-	private Date releaseTime;
-	private String jobType;
-	private String workExperience;
-	private String minDegree;
-	private int needNumber;
-	private String positionCategory;
-	private String positionDecription;
-	private String companyProfile;
-	public Recruit(int rid, String workPlace, Date releaseTime, String jobType, String workExperience, String minDegree,
-			int needNumber, String positionCategory, String positionDecription, String companyProfile) {
+	private int recruitId;
+	private Department depart;
+	private Position position;
+	private double salary;
+	private String title;
+	private Administrator admin;
+	public Recruit(int recruitId, Department depart, Position position, double salary, String title,
+			Administrator admin) {
 		super();
-		this.rid = rid;
-		this.workPlace = workPlace;
-		this.releaseTime = releaseTime;
-		this.jobType = jobType;
-		this.workExperience = workExperience;
-		this.minDegree = minDegree;
-		this.needNumber = needNumber;
-		this.positionCategory = positionCategory;
-		this.positionDecription = positionDecription;
-		this.companyProfile = companyProfile;
+		this.recruitId = recruitId;
+		this.depart = depart;
+		this.position = position;
+		this.salary = salary;
+		this.title = title;
+		this.admin = admin;
 	}
 	public Recruit() {
 		super();
 	}
-	public int getRid() {
-		return rid;
+	public int getRecruitId() {
+		return recruitId;
 	}
-	public void setRid(int rid) {
-		this.rid = rid;
+	public void setRecruitId(int recruitId) {
+		this.recruitId = recruitId;
 	}
-	public String getWorkPlace() {
-		return workPlace;
+	public Department getDepart() {
+		return depart;
 	}
-	public void setWorkPlace(String workPlace) {
-		this.workPlace = workPlace;
+	public void setDepart(Department depart) {
+		this.depart = depart;
 	}
-	public Date getReleaseTime() {
-		return releaseTime;
+	public Position getPosition() {
+		return position;
 	}
-	public void setReleaseTime(Date releaseTime) {
-		this.releaseTime = releaseTime;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
-	public String getJobType() {
-		return jobType;
+	public double getSalary() {
+		return salary;
 	}
-	public void setJobType(String jobType) {
-		this.jobType = jobType;
+	public void setSalary(double salary) {
+		this.salary = salary;
 	}
-	public String getWorkExperience() {
-		return workExperience;
+	public String getTitle() {
+		return title;
 	}
-	public void setWorkExperience(String workExperience) {
-		this.workExperience = workExperience;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getMinDegree() {
-		return minDegree;
+	public Administrator getAdmin() {
+		return admin;
 	}
-	public void setMinDegree(String minDegree) {
-		this.minDegree = minDegree;
-	}
-	public int getNeedNumber() {
-		return needNumber;
-	}
-	public void setNeedNumber(int needNumber) {
-		this.needNumber = needNumber;
-	}
-	public String getPositionCategory() {
-		return positionCategory;
-	}
-	public void setPositionCategory(String positionCategory) {
-		this.positionCategory = positionCategory;
-	}
-	public String getPositionDecription() {
-		return positionDecription;
-	}
-	public void setPositionDecription(String positionDecription) {
-		this.positionDecription = positionDecription;
-	}
-	public String getCompanyProfile() {
-		return companyProfile;
-	}
-	public void setCompanyProfile(String companyProfile) {
-		this.companyProfile = companyProfile;
+	public void setAdmin(Administrator admin) {
+		this.admin = admin;
 	}
 	@Override
 	public String toString() {
-		return "Recruit [rid=" + rid + ", workPalce=" + workPlace + ", releaseTime=" + releaseTime + ", jobType="
-				+ jobType + ", workExperience=" + workExperience + ", minDegree=" + minDegree + ", needNumber="
-				+ needNumber + ", positionCategory=" + positionCategory + ", positionDecription=" + positionDecription
-				+ ", companyProfile=" + companyProfile + "]";
+		return "Recruit [recruitId=" + recruitId + ", depart=" + depart + ", position=" + position + ", salary="
+				+ salary + ", title=" + title + ", admin=" + admin + "]";
 	}
 	
 	
