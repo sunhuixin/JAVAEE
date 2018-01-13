@@ -12,7 +12,7 @@ public interface EmployeeService {
 	
 	public List<Employee> findByDepartId(int departId);
 	
-	public Employee findByUserId(int empId);
+	public Employee findByEmpId(int empId);
 
 	public int updateByEmpId(@Param("empId")int empId,@Param("departId")int departId,@Param("positionId")int positionId);
 

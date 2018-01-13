@@ -24,7 +24,9 @@ public class MyUtil {
 		System.out.println(date);
 		int count = 0;
 		Calendar c=Calendar.getInstance();
+		@SuppressWarnings("deprecation")
 		int year = date.getYear();
+		@SuppressWarnings("deprecation")
 		int month=date.getMonth();
 		int days=0;
 		switch (month) {

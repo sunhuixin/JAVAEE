@@ -25,6 +25,11 @@ public class Employee {
 		this.empEmail = empEmail;
 		this.empPoliticalStatus = empPoliticalStatus;
 	}
+	public Employee(int empId) {
+		super();
+		this.empId = empId;
+	}
+
 	public Employee() {
 		super();
 	}

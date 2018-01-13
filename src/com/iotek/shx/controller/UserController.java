@@ -101,7 +101,7 @@ public class UserController extends BaseController{
 			Interview interview = getUserService().getInterviewByUid(newUser.getUserId());
 			System.out.println(interview);
 			session.setAttribute("interview", interview);
-			Employee emp =getEmployeeService().findByUserId(newUser.getUserId());
+			Employee emp =getEmployeeService().findByEmpId(newUser.getUserId());
 			if(emp!=null){
 				session.setAttribute("emp", emp);
 				Training train = getTrainService().queryByEmpId(emp.getEmpId());

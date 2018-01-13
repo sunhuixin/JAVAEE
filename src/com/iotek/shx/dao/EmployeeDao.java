@@ -23,7 +23,7 @@ public interface EmployeeDao {
 	 * @param empId
 	 * @return
 	 */
-	public Employee queryByUserId(int empId);
+	public Employee queryByEmpId(int empId);
 
 	public int updateByEmpId(@Param("empId")int empId,@Param("departId")int departId,@Param("positionId")int positionId);
 

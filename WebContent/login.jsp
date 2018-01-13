@@ -67,9 +67,9 @@
 			background-size: cover;
 		}
 		#formD{
-		position: absolute;width:280px;left:50%;top:30%; 
+		position: absolute;left:50%;top:30%; 
 		margin-left:-140px;
-		background-color: white;
+		margin-top: -100px;
 		color: blue; 
 		}
 		td{
@@ -81,20 +81,20 @@
 	<div id="formD">
 	<form action="" method="post">
 		<table  cellpadding="8" cellspacing="0">
-		<tr><td colspan=2>欢迎使用人力资源系统</td></tr>
+		<tr><td colspan=2 style="font-size:30px;">欢迎使用人力资源系统</td></tr>
 			<tr>
 				<td align="right">用户名:</td>
-				<td><input type="text" name="userName" id="name"></td>
+				<td><input type="text" name="userName" id="name" size="30px" style="border-radius: 10px;"></td>
 			</tr>
 			<tr>
 				<td align="right">密&nbsp;码:</td>
-				<td><input type="password" name="password" width="100%"></td>
+				<td><input type="password" name="password" width="100%" size="30px" style="border-radius: 10px;"></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="button" value="注册" class="regist"></td>
+				<td colspan="2" align="center"><input type="button" value="注册" class="regist"  style="border-radius: 10px;"></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="button" value="登录" class="login"></td>
+				<td colspan="2" align="center"><input type="button" value="登录" class="login"  style="border-radius: 10px;"></td>
 			</tr>
 			<tr><td colspan=2><a href="${pageContext.request.contextPath}/admin/index">管理员登录</a></td></tr>
 			<tr>

@@ -8,20 +8,16 @@ public class Punishment {
 	private double punishMoney;
 	private Date punishTime;
 	private Employee emp;
-	public Punishment(int punishId, String punishReason, double punishMoney, Date punishTime, Employee emp) {
+	private Administrator admin;
+	public Punishment(int punishId, String punishReason, double punishMoney, Date punishTime, Employee emp,
+			Administrator admin) {
 		super();
 		this.punishId = punishId;
 		this.punishReason = punishReason;
 		this.punishMoney = punishMoney;
 		this.punishTime = punishTime;
 		this.emp = emp;
-	}
-	public Punishment(String punishReason, double punishMoney, Date punishTime, Employee emp) {
-		super();
-		this.punishReason = punishReason;
-		this.punishMoney = punishMoney;
-		this.punishTime = punishTime;
-		this.emp = emp;
+		this.admin = admin;
 	}
 	public Punishment() {
 		super();
@@ -55,6 +51,12 @@ public class Punishment {
 	}
 	public void setEmp(Employee emp) {
 		this.emp = emp;
+	}
+	public Administrator getAdmin() {
+		return admin;
+	}
+	public void setAdmin(Administrator admin) {
+		this.admin = admin;
 	}
 	@Override
 	public String toString() {

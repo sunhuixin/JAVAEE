@@ -22,8 +22,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee findByUserId(int empId) {
-		return empDao.queryByUserId(empId);
+	public Employee findByEmpId(int empId) {
+		return empDao.queryByEmpId(empId);
 	}
 
 	@Override

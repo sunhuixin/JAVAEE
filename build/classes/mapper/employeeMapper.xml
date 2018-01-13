@@ -25,7 +25,7 @@
 			now()
 		)
 	</insert>
-	<select id="queryByUserId" resultType="Employee">
+	<select id="queryByEmpId" resultType="Employee">
 		SELECT 
 			emp_id,
 			u.user_id "user.userId",

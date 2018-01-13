@@ -43,12 +43,12 @@ public class ObjectionServiceImpl implements ObjectionService {
 		return objectionDao.queryPunishmentByAdminId(adminId);
 	}
 
-	@Override
+	@Override//2表示同意
 	public int update2ByObjectionId(int objectionId) {
 		return objectionDao.update2ByObjectionId(objectionId);
 	}
 
-	@Override
+	@Override//1表示否决
 	public int update1ByObjectionId(String objectionReason, int objectionId) {
 		return objectionDao.update1ByObjectionId(objectionReason, objectionId);
 	}
@@ -64,7 +64,7 @@ public class ObjectionServiceImpl implements ObjectionService {
 	}
 
 	@Override
-	public int insertS(int empId, int rapId, String objetionReason) {
+	public int addObjectionSalary(int empId, int rapId, String objetionReason) {
 		return objectionDao.insertS(empId, rapId, objetionReason);
 	}
 

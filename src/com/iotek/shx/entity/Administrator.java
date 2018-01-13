@@ -19,6 +19,10 @@ public class Administrator {
 		this.depart = depart;
 		this.resumes = resumes;
 	}
+	public Administrator(int adminId) {
+		super();
+		this.adminId = adminId;
+	}
 	public Administrator() {
 		super();
 	}

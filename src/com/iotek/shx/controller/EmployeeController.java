@@ -2,22 +2,31 @@ package com.iotek.shx.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iotek.shx.entity.Administrator;
+import com.iotek.shx.entity.Attendance;
 import com.iotek.shx.entity.Employee;
 import com.iotek.shx.entity.Objection;
+import com.iotek.shx.entity.Punishment;
 import com.iotek.shx.entity.Reward;
+import com.iotek.shx.entity.RewardAndPunishment;
 import com.iotek.shx.util.MyUtil;
 
 @Controller()
@@ -29,9 +38,9 @@ public class EmployeeController extends BaseController{
 		Integer rapId=Integer.valueOf(req.getParameter("rapId"));
 		String oReason =req.getParameter("oReason");
 		System.out.println(eid+" "+rapId+" "+oReason);
-		boolean flag = getObjectionService().addOSalary(eid,rapId,oReason);
+		int flag = getObjectionService().addObjectionSalary(eid,rapId,oReason);
 		System.out.println(flag);
-		if(flag){
+		if(flag>0){
 			out.print(0);
 		}else{
 			out.print(1);
@@ -39,13 +48,13 @@ public class EmployeeController extends BaseController{
 	}
 	@RequestMapping("/myObjection")
 	public String myObjection(HttpSession session,@RequestParam("eid")Integer eid){
-		List<Objection> pObjections = getObjectionService().queryPByEid(eid);
-		List<Objection> rObjections = getObjectionService().queryRByEid(eid);
-		List<Objection> sObjections =getObjectionService().querySByEid(eid);
+		List<Objection> pObjections = getObjectionService().queryPunishmentByEmpId(eid);
+		List<Objection> rObjections = getObjectionService().queryRewardByEmpId(eid);
+		List<Objection> sObjections =getObjectionService().querySByEmpId(eid);
 		session.setAttribute("pObjections", pObjections);
 		session.setAttribute("rObjections", rObjections);
 		session.setAttribute("sObjections", sObjections);
-		return "forward:/WEB-INF/views/emp/myObj.jsp";
+		return "forward:/emp/myObj.jsp";
 	}
 	@RequestMapping("/homePage")
 	public String homePage(){
@@ -58,7 +67,7 @@ public class EmployeeController extends BaseController{
 		int totaldays=MyUtil.totalDays(date);
 		Administrator admin = getAdminService().findById(0);
 		Integer empId =Integer.valueOf(req.getParameter("eid"));
-		Employee employee = getEmployeeService().findByUserId(empId);
+		Employee employee = getEmployeeService().findByEmpId(empId);
 		reward.setRewardMoney((employee.getBaseSalary()/totaldays));
 		reward.setRewardReason("¼Ó°à");
 		reward.setAdmin(admin);
@@ -78,17 +87,17 @@ public class EmployeeController extends BaseController{
 		Integer pid= Integer.valueOf(req.getParameter("pid"));
 		String oReason=req.getParameter("oReason");
 		System.out.println(oReason);
-		Employee employee = getEmployeeService().findByEid(eid);
+		Employee employee = getEmployeeService().findByEmpId(eid);
 		Integer aid = Integer.valueOf(req.getParameter("aid"));
 		if(aid==0){
 			aid=3;
 		}
-		Admin admin = getAdminService().findById(aid);
+		Administrator admin = getAdminService().findById(aid);
 		System.out.println(eid+"pid"+pid+"");
-		boolean flag =getObjectionService().addOPunish(employee,pid,oReason,admin);
+		int flag =getObjectionService().insertPunish(employee,pid,oReason,admin);
 		System.out.println(flag);
 		PrintWriter out = resp.getWriter();
-		if(flag){
+		if(flag>0){
 			out.print(0);
 		}else{
 			out.print(1);
@@ -100,20 +109,21 @@ public class EmployeeController extends BaseController{
 		Integer rewardId= Integer.valueOf(req.getParameter("rewardId"));
 		String oReason=req.getParameter("oReason");
 		System.out.println(oReason);
-		Employee employee = getEmployeeService().findByEid(eid);
+		Employee employee = getEmployeeService().findByEmpId(eid);
 		Integer aid = Integer.valueOf(req.getParameter("aid"));
 		if(aid==0){
 			aid=3;
 		}
-		Admin admin = getAdminService().findById(aid);
-		boolean flag =getObjectionService().addOReward(employee,rewardId,oReason,admin);
+		Administrator admin = getAdminService().findById(aid);
+		int flag =getObjectionService().insertReward(employee,rewardId,oReason,admin);
 		PrintWriter out = resp.getWriter();
-		if(flag){
+		if(flag>0){
 			out.print(0);
 		}else{
 			out.print(1);
 		}	
 	}
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/showMonthCheck")
 	public String showMonthCheck(@RequestParam("date")String date,@RequestParam("eid") Integer eid,Model model) throws ParseException {
 		System.out.println(date);
@@ -123,9 +133,9 @@ public class EmployeeController extends BaseController{
 		Integer month=date1.getMonth();
 		int totaldays=MyUtil.totalDays(date1);
 		
-		List<Check> checks = getCheckService().findByEid(eid);
-		List<Check> newChecks = new ArrayList<>();
-		for (Check check : checks) {
+		List<Attendance> checks = getAttendService().findByEmpId(eid);
+		List<Attendance> newChecks = new ArrayList<>();
+		for (Attendance check : checks) {
 			if(check.getDate().getYear()==year&&check.getDate().getMonth()==month){
 				newChecks.add(check);
 			}
@@ -140,20 +150,21 @@ public class EmployeeController extends BaseController{
 		return "forward:/WEB-INF/views/emp/showMonthCheck.jsp";
 	}
 
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/changeShowSalary")
 	public String changeShowSalary(Model model, @RequestParam("eid") Integer eid,
 			@RequestParam("startTime") String startTime, @RequestParam("endTime") String endTime)
 			throws ParseException {
-		Employee emp = getEmployeeService().findByEid(eid);
+		Employee emp = getEmployeeService().findByEmpId(eid);
 		System.out.println(eid);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
 		Date startDate = df.parse(startTime);
 		Date endDate = df.parse(endTime);
 		System.out.println(emp);
 		System.out.println("startDate:" + startDate + "endDate:" + endDate);
-		List<RAP> raps = getRapService().findByEidBeTween(eid, startDate, endDate);
-		Map<RAP, Double> sums = new HashMap<>();
-		for (RAP rap : raps) {
+		List<RewardAndPunishment> raps = getRapService().queryByEmpIdBetween(eid, startDate, endDate);
+		HashMap<RewardAndPunishment, Double> sums =  new HashMap<RewardAndPunishment, Double>();
+		for (RewardAndPunishment rap : raps) {
 			sums.put(rap, rap.getBaseSalary() + rap.getRapSalary());
 			System.out.println(rap);
 		}
@@ -167,7 +178,7 @@ public class EmployeeController extends BaseController{
 			} else {
 				date.setMonth(date.getMonth() - 1);
 			}
-			RAP rap = getRapService().findByEidAndDate(eid, date);
+			RewardAndPunishment rap = getRapService().queryByEmpIdAndDate(eid, date);
 			if(rap!=null){
 			raps.add(rap);
 			sums.put(rap, rap.getBaseSalary() + rap.getRapSalary());
@@ -176,17 +187,17 @@ public class EmployeeController extends BaseController{
 		}
 		model.addAttribute("sums", sums);
 		model.addAttribute("raps", raps);
-		return "forward:/WEB-INF/views/emp/showSalary.jsp";
+		return "forward:/emp/showSalary.jsp";
 	}
 
 	@RequestMapping("/changeAbsent")
 	public void changeAbsent(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Integer eid = Integer.valueOf(req.getParameter("eid"));
 		Date date = new Date();
-		boolean flag = getCheckService().changeAbsentByEid(eid, date);
+		int flag = getAttendService().updateLate2(eid, date);
 		PrintWriter out = resp.getWriter();
 		System.out.println(flag);
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
 			out.print("no");
@@ -197,9 +208,9 @@ public class EmployeeController extends BaseController{
 	public void changeOk(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Integer eid = Integer.valueOf(req.getParameter("eid"));
 		Date date = new Date();
-		boolean flag = getCheckService().changeOkByEid(eid, date);
+		int flag = getAttendService().updateLate0(eid, date);
 		PrintWriter out = resp.getWriter();
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
 			out.print("no");
@@ -210,9 +221,9 @@ public class EmployeeController extends BaseController{
 	public void changeLate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Integer eid = Integer.valueOf(req.getParameter("eid"));
 		Date date = new Date();
-		boolean flag = getCheckService().changeLateByEid(eid, date);
+		int flag = getAttendService().updateLate1(eid, date);
 		PrintWriter out = resp.getWriter();
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
 			out.print("no");
@@ -228,8 +239,8 @@ public class EmployeeController extends BaseController{
 		}else{
 		out.print(2);	
 		}
-		boolean flag = getTrainService().changeAttendByEid(eid);
-		if (flag) {
+		int flag = getTrainService().updateByEmpId(eid);
+		if (flag>0) {
 			out.print(0);
 		} else {
 			out.print(1);
@@ -239,16 +250,17 @@ public class EmployeeController extends BaseController{
 	@RequestMapping("/showOthers")
 	public String showOthers(@Param("deptId") Integer deptId, Model model) {
 		System.out.println(deptId);
-		List<Employee> emps = getEmployeeService().findByDeptId(deptId);
+		List<Employee> emps = getEmployeeService().findByDepartId(deptId);
 		model.addAttribute("emps", emps);
-		List<Admin> admins = getAdminService().findWithDept(deptId);
+		List<Administrator> admins = getAdminService().findByDepartId(deptId);
 		model.addAttribute("admins", admins);
-		return "forward:/WEB-INF/views/emp/showAll.jsp";
+		return "forward:/emp/showAll.jsp";
 	}
 
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/showSalary")
 	public String showSalary(@Param("eid") Integer eid, Model model,HttpSession session) {
-		Employee emp = getEmployeeService().findByEid(eid);
+		Employee emp = getEmployeeService().findByEmpId(eid);
 		System.out.println(emp);
 		Date date = new Date();
 		if (date.getMonth() == 0) {
@@ -258,7 +270,7 @@ public class EmployeeController extends BaseController{
 			date.setMonth(date.getMonth() - 1);
 		}
 		System.out.println(date);
-		RAP rap = getRapService().findByEidAndDate(eid, date);
+		RewardAndPunishment rap = getRapService().queryByEmpIdAndDate(eid, date);
 		if(rap!=null){
 		System.out.println("rap" + rap);
 		
@@ -266,15 +278,15 @@ public class EmployeeController extends BaseController{
 		model.addAttribute("sum", sum);
 		}
 		model.addAttribute("rap", rap);
-		return "forward:/WEB-INF/views/emp/showSalary.jsp";
+		return "forward:/emp/showSalary.jsp";
 	}
 
 	@RequestMapping("/rapRecords")
 	public String queryRapRecords(@Param("eid") Integer eid, Model model) {
 		System.out.println(eid);
-		Employee emp = getEmployeeService().findByEid(eid);
-		List<Punishment> punishments = getPunishmentService().findByEid(eid);
-		List<Reward> rewards = getRewardService().findByEid(eid);
+		Employee emp = getEmployeeService().findByEmpId(eid);
+		List<Punishment> punishments = getPunishmentService().queryPunishmentByEmpId(eid);
+		List<Reward> rewards = getRewardService().queryRewardByEmpId(eid);
 		model.addAttribute("punishments", punishments);
 		model.addAttribute("rewards", rewards);
 		model.addAttribute("emp", emp);
@@ -283,10 +295,10 @@ public class EmployeeController extends BaseController{
 			sum += reward.getRewardMoney();
 		}
 		for (Punishment punishment : punishments) {
-			sum -= punishment.getpMoney();
+			sum -= punishment.getPunishMoney();
 		}
 		model.addAttribute("sum", sum);
-		return "forward:/WEB-INF/views/emp/showRAP.jsp";
+		return "forward:/emp/showRAP.jsp";
 	}
 
 	@RequestMapping("/checkOn")
@@ -302,9 +314,9 @@ public class EmployeeController extends BaseController{
 		System.out.println(time);
 		// System.out.println(time);
 		System.out.println(date);
-		boolean flag = getCheckService().addOnTimeByEid(eid, date, time);
+		int flag = getAttendService().addOnTimeByEmpId(eid, date, time);
 		PrintWriter out = resp.getWriter();
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
 
@@ -325,12 +337,11 @@ public class EmployeeController extends BaseController{
 		System.out.println(time);
 		// System.out.println(time);
 		System.out.println(date);
-		boolean flag = getCheckService().changeOffTimeByEid(eid, date, time);
+		int flag = getAttendService().updateOffTimeByEmpId(eid, date, time);
 		PrintWriter out = resp.getWriter();
-		if (flag) {
+		if (flag>0) {
 			out.print(0);
 		} else {
-
 			out.print(1);
 		}
 	}

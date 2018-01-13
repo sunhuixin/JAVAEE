@@ -29,7 +29,7 @@ public interface ObjectionService {
 
 	public List<Objection> queryRewardByEmpId(int empId);
 
-	public int insertS(@Param("empId")int empId, @Param("rapId")int rapId,@Param("objectionReason")String objetionReason);
+	public int addObjectionSalary(@Param("empId")int empId, @Param("rapId")int rapId,@Param("objectionReason")String objetionReason);
 
 	public Objection queryByRapId(int rapId);
 
